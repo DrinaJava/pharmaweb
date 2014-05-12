@@ -13,7 +13,7 @@
 	<name>Pharmaweb EAR</name>
 
 	<properties>
-		<glassfish.home>/etc/programmes/glassfish</glassfish.home>
+		<glassfish.home>D:\\glassfish</glassfish.home>
 		<glassfish.user>admin</glassfish.user>
 		<glassfish.domain>domain1</glassfish.domain>
 		<glassfish.passfile>${glassfish.home}/domains/${glassfish.domain}/config/domain-passwords</glassfish.passfile>
@@ -28,6 +28,7 @@
 				<artifactId>maven-ear-plugin</artifactId>
 				<configuration>
 					<generateApplicationXml>true</generateApplicationXml>
+					
 					<modules>
 						<ejbModule>
 							<groupId>com.pharmaweb</groupId>
