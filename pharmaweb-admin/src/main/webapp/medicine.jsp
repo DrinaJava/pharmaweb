@@ -7,7 +7,7 @@
 <section>
 	<h1>&Eacute;dition d'un m&eacute;dicament</h1>
 
-	<form role="form">
+	<form role="form" method="post">
 	
 		<div class="form-group">
 			<label for="name">Nom</label>
@@ -30,7 +30,7 @@
 		
 		<div class="checkbox">
 			<label>
-				<input type="checkbox" name="ordonance"> Uniquement sur ordonnace
+				<input type="checkbox" name="ordonance" value="true"> Uniquement sur ordonnace
 			</label>
 		</div>
 		

@@ -41,9 +41,9 @@ public class MedicineServlet extends HttpServlet {
 			}catch(NumberFormatException e){
 			}
 		}
-		if(request.getParameter("edit") != null){
+		else if(request.getParameter("edit") != null){
 			try{
-				int id_medicine = Integer.parseInt(request.getParameter("del"));
+				int id_medicine = Integer.parseInt(request.getParameter("edit"));
 				
 				//TODO load medicine code
 							
@@ -52,6 +52,9 @@ public class MedicineServlet extends HttpServlet {
 			}
 			this.dispatcher = getServletContext().getRequestDispatcher("/medicine.jsp");
 			this.dispatcher.forward(request, response);
+		}else{
+			this.dispatcher = getServletContext().getRequestDispatcher("/medicine.jsp");
+			this.dispatcher.forward(request, response);			
 		}
 
 	}
@@ -60,7 +63,32 @@ public class MedicineServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String name = request.getParameter("name");
+		String manufacter = request.getParameter("name");
+		String description = request.getParameter("description");
+		//int classe = Integer.parseInt(request.getParameter("classe"));
+		String ordonance = request.getParameter("ordonance");
+		
+		request.setAttribute("ordonance", ordonance);
+		
+		if(request.getParameter("edit") != null){
+			try{
+				int id_medicine = Integer.parseInt(request.getParameter("edit"));
+				
+				//TODO load medicine code
+				
+			}catch(NumberFormatException e){
+			}
+		}else{
+
+			
+			
+			//TODO add medic code
+			
+		}
+		
+		this.dispatcher = getServletContext().getRequestDispatcher("/medicine.jsp");
+		this.dispatcher.forward(request, response);		
 	}
 
 }
