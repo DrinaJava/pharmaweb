@@ -1,0 +1,11 @@
+@CHARSET "UTF-8";
+
+.loginForm{
+	width:500px;
+	height:220px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-top:-150px;
+	margin-left:-250px;
+}

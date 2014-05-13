@@ -10,7 +10,7 @@
 
 	<artifactId>pharmaweb-www</artifactId>
 	<packaging>war</packaging>
-	<name>Booxtore WEB</name>
+	<name>Pharmaweb WEB</name>
 	<build>
 
 
@@ -81,8 +81,8 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.booxtore</groupId>
-			<artifactId>booxtore-ejb</artifactId>
+			<groupId>com.pharmaweb</groupId>
+			<artifactId>pharmaweb-ejb</artifactId>
 			<type>ejb</type>
 			<version>1.0-SNAPSHOT</version>
 			<scope>provided</scope>
