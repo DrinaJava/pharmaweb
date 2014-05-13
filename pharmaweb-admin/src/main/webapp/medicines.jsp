@@ -8,6 +8,8 @@
 
 <section>
 	<h1>Médicaments</h1>
+	
+	-- ${sessionScope.message} --
 
 	<div class="text-right">
 		<a href="Medicine" class="btn btn-success">Nouveau médicament</a>

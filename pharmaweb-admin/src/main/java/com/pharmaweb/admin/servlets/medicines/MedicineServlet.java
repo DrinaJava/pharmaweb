@@ -1,5 +1,7 @@
 package com.pharmaweb.admin.servlets.medicines;
 
+import com.pharmaweb.admin.i18n.I18n;
+
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -73,22 +75,25 @@ public class MedicineServlet extends HttpServlet {
 		
 		if(request.getParameter("edit") != null){
 			try{
+				
 				int id_medicine = Integer.parseInt(request.getParameter("edit"));
 				
 				//TODO load medicine code
 				
+				response.sendRedirect("Medicine");
+				
 			}catch(NumberFormatException e){
 			}
 		}else{
-
-			
-			
 			//TODO add medic code
+			
+			request.getSession().setAttribute("message", I18n._(I18n.MEDICINE_CREATE_SUCCESS));
+			response.sendRedirect("Medicines");
 			
 		}
 		
-		this.dispatcher = getServletContext().getRequestDispatcher("/medicine.jsp");
-		this.dispatcher.forward(request, response);		
+//		this.dispatcher = getServletContext().getRequestDispatcher("/medicine.jsp");
+//		this.dispatcher.forward(request, response);		
 	}
 
 }

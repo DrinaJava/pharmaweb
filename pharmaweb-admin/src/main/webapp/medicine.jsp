@@ -46,7 +46,7 @@
 			<p class="help-block">Notice du médicament</p>
 		</div>	
 		<input type="submit" class="btn btn-primary" value="Enregister"/>
-		<input type="submit" class="btn btn-danger" value="Annuler"/>
+		<a href="Medicines" class="btn btn-danger" >Annuler</a>
 	</form>
 
 
