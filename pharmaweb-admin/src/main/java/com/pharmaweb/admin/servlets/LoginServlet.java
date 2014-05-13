@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pharmaweb.admin.i18n.I18n;
+
 /**
  * Servlet implementation class LoginServlet
  */
@@ -46,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect(response.encodeRedirectURL("Home"));
 		}
 		else{
-			request.setAttribute("message", "Identifiant et/ou mot de passe invalide.");
+			request.setAttribute("message", I18n._(I18n.INVALID_LOGIN));
 			this.dispatcher = getServletContext().getRequestDispatcher("login.jsp");
 			this.dispatcher.forward(request, response);
 		}
