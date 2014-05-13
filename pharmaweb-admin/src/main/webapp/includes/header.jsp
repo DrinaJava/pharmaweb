@@ -6,6 +6,12 @@
 <link href="css/fonts.css" type="text/css" rel="stylesheet" />
 <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" />
 <link href="css/styles.css" type="text/css" rel="stylesheet" />
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/jquery.dataTables.css" rel="stylesheet" />
+<link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.dataTables.js"></script>
 
 <title>Pharmaweb</title>
 </head>

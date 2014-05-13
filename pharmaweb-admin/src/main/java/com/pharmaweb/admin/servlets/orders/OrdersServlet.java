@@ -1,6 +1,8 @@
 package com.pharmaweb.admin.servlets.orders;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Orders")
 public class OrdersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private RequestDispatcher dispatcher;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -26,7 +29,8 @@ public class OrdersServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		this.dispatcher = getServletContext().getRequestDispatcher("/orders.jsp");
+		this.dispatcher.forward(request, response);
 	}
 
 	/**

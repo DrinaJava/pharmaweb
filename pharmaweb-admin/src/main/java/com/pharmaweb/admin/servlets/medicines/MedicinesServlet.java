@@ -29,6 +29,7 @@ public class MedicinesServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			
 		this.dispatcher = getServletContext().getRequestDispatcher("/medicines.jsp");
 		this.dispatcher.forward(request, response);
 	}

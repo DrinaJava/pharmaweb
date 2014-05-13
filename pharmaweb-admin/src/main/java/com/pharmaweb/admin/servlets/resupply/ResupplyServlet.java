@@ -1,6 +1,8 @@
 package com.pharmaweb.admin.servlets.resupply;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Resupply")
 public class ResupplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private RequestDispatcher dispatcher;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -26,7 +29,8 @@ public class ResupplyServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		this.dispatcher = getServletContext().getRequestDispatcher("/resupply.jsp");
+		this.dispatcher.forward(request, response);
 	}
 
 	/**

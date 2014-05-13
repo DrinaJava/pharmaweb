@@ -1,1 +1,38 @@
 @CHARSET "UTF-8";
+
+a:hover{
+	text-decoration: none;
+}
+
+nav{
+	background-color: #3a3a3a;
+	line-height: 50px;
+}
+nav a{
+	color:#fff;
+	padding: 0 15px;
+	display: inline-block;
+}
+nav a:hover, nav a:active{
+	color:#fff;
+	background-color: #3E933E;
+	text-decoration: none;
+}
+section{
+	padding: 30px;
+
+}
+
+
+/* Section */
+
+section .panel{
+	margin-top: 25px;
+}
+
+
+/*  Table  */
+
+td.edit{
+	word-spacing: 15px;
+}
