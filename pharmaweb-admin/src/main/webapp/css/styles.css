@@ -1,7 +1,12 @@
 @CHARSET "UTF-8";
 
+a{
+	color:black;
+	text-decoration: none;
+}
 a:hover{
 	text-decoration: none;
+	color: #3E933E;
 }
 
 nav{
