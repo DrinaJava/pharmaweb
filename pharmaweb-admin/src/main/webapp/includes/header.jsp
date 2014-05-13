@@ -1,4 +1,4 @@
-<!DOCTYPE html">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,9 +16,12 @@
 		<header>
 
 			<nav>
-
+				<a href="Home">Accueil</a>
+				<a href="Orders">Commandes</a>
+				<a href="Medicines">Médicaments</a>
+				<a href="Pharmacies">Pharmacies</a>
+				<a href="Resupply">Réapprovisionnement</a>
 				
-
 			</nav>
 
 		</header>
