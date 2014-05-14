@@ -2,7 +2,6 @@ package com.pharmaweb.model.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -28,7 +27,7 @@ public class Pharmacie implements Serializable {
 	private String nomPharmacie;
 
 	@Column(name="TELEPHONE_PHARMACIE")
-	private BigDecimal telephonePharmacie;
+	private String telephonePharmacie;
 
 	//bi-directional many-to-one association to PharmacieStock
 	@OneToMany(mappedBy="pharmacie")
@@ -78,11 +77,11 @@ public class Pharmacie implements Serializable {
 		this.nomPharmacie = nomPharmacie;
 	}
 
-	public BigDecimal getTelephonePharmacie() {
+	public String getTelephonePharmacie() {
 		return this.telephonePharmacie;
 	}
 
-	public void setTelephonePharmacie(BigDecimal telephonePharmacie) {
+	public void setTelephonePharmacie(String telephonePharmacie) {
 		this.telephonePharmacie = telephonePharmacie;
 	}
 

@@ -3,7 +3,6 @@ package com.pharmaweb.model.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 
@@ -21,9 +20,8 @@ public class LotProduit implements Serializable {
 	@Column(name="ID_LOT_PRODUIT")
 	private long idLotProduit;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="DATE_EXPIRATION_LOT_PRODUIT")
-	private Date dateExpirationLotProduit;
+	private String dateExpirationLotProduit;
 
 	@Lob
 	@Column(name="NUM_LOT_PRODUIT")
@@ -68,11 +66,11 @@ public class LotProduit implements Serializable {
 		this.idLotProduit = idLotProduit;
 	}
 
-	public Date getDateExpirationLotProduit() {
+	public String getDateExpirationLotProduit() {
 		return this.dateExpirationLotProduit;
 	}
 
-	public void setDateExpirationLotProduit(Date dateExpirationLotProduit) {
+	public void setDateExpirationLotProduit(String dateExpirationLotProduit) {
 		this.dateExpirationLotProduit = dateExpirationLotProduit;
 	}
 

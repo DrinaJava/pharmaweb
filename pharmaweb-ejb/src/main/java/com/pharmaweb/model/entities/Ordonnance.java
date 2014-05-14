@@ -31,28 +31,28 @@ public class Ordonnance implements Serializable {
 	@Column(name="VALIDITE_ORDONNANCE")
 	private String validiteOrdonnance;
 
-	//bi-directional many-to-one association to ContientOrdonnance
-	@OneToMany(mappedBy="ordonnance")
-	private List<ContientOrdonnance> contientOrdonnances;
-
 	//bi-directional many-to-many association to CommandeClient
 	@ManyToMany(mappedBy="ordonnances")
 	private List<CommandeClient> commandeClients;
+
+	//bi-directional many-to-one association to ContientOrdonnance
+	@OneToMany(mappedBy="ordonnance")
+	private List<ContientOrdonnance> contientOrdonnances;
 
 	//bi-directional many-to-one association to Adresse
 	@ManyToOne
 	@JoinColumn(name="ID_ADRESSE")
 	private Adresse adresse;
 
-	//bi-directional many-to-one association to Medecin
-	@ManyToOne
-	@JoinColumn(name="ID_MEDECIN")
-	private Medecin medecin;
-
 	//bi-directional many-to-one association to Client
 	@ManyToOne
 	@JoinColumn(name="ID_CLIENT")
 	private Client client;
+
+	//bi-directional many-to-one association to Medecin
+	@ManyToOne
+	@JoinColumn(name="ID_MEDECIN")
+	private Medecin medecin;
 
 	public Ordonnance() {
 	}
@@ -89,6 +89,14 @@ public class Ordonnance implements Serializable {
 		this.validiteOrdonnance = validiteOrdonnance;
 	}
 
+	public List<CommandeClient> getCommandeClients() {
+		return this.commandeClients;
+	}
+
+	public void setCommandeClients(List<CommandeClient> commandeClients) {
+		this.commandeClients = commandeClients;
+	}
+
 	public List<ContientOrdonnance> getContientOrdonnances() {
 		return this.contientOrdonnances;
 	}
@@ -111,14 +119,6 @@ public class Ordonnance implements Serializable {
 		return contientOrdonnance;
 	}
 
-	public List<CommandeClient> getCommandeClients() {
-		return this.commandeClients;
-	}
-
-	public void setCommandeClients(List<CommandeClient> commandeClients) {
-		this.commandeClients = commandeClients;
-	}
-
 	public Adresse getAdresse() {
 		return this.adresse;
 	}
@@ -127,20 +127,20 @@ public class Ordonnance implements Serializable {
 		this.adresse = adresse;
 	}
 
-	public Medecin getMedecin() {
-		return this.medecin;
-	}
-
-	public void setMedecin(Medecin medecin) {
-		this.medecin = medecin;
-	}
-
 	public Client getClient() {
 		return this.client;
 	}
 
 	public void setClient(Client client) {
 		this.client = client;
+	}
+
+	public Medecin getMedecin() {
+		return this.medecin;
+	}
+
+	public void setMedecin(Medecin medecin) {
+		this.medecin = medecin;
 	}
 
 }

@@ -49,6 +49,19 @@ public class Produit implements Serializable {
 	@OneToMany(mappedBy="produit")
 	private List<ContientOrdonnance> contientOrdonnances;
 
+	//bi-directional many-to-one association to FournisseurProduit
+	@OneToMany(mappedBy="produit")
+	private List<FournisseurProduit> fournits;
+
+	//bi-directional many-to-one association to LotProduit
+	@OneToMany(mappedBy="produit")
+	private List<LotProduit> lotProduits;
+
+	//bi-directional many-to-one association to ClassePharmaceutique
+	@ManyToOne
+	@JoinColumn(name="ID_CLASSE_PHARMACEUTIQUE")
+	private ClassePharmaceutique classePharmaceutique;
+
 	//bi-directional many-to-many association to Fournisseur
 	@ManyToMany
 	@JoinTable(
@@ -61,15 +74,6 @@ public class Produit implements Serializable {
 			}
 		)
 	private List<Fournisseur> fournisseurs;
-
-	//bi-directional many-to-one association to LotProduit
-	@OneToMany(mappedBy="produit")
-	private List<LotProduit> lotProduits;
-
-	//bi-directional many-to-one association to ClassePharmaceutique
-	@ManyToOne
-	@JoinColumn(name="ID_CLASSE_PHARMACEUTIQUE")
-	private ClassePharmaceutique classePharmaceutique;
 
 	//bi-directional many-to-one association to Tva
 	@ManyToOne
@@ -170,12 +174,26 @@ public class Produit implements Serializable {
 		return contientOrdonnance;
 	}
 
-	public List<Fournisseur> getFournisseurs() {
-		return this.fournisseurs;
+	public List<FournisseurProduit> getFournits() {
+		return this.fournits;
 	}
 
-	public void setFournisseurs(List<Fournisseur> fournisseurs) {
-		this.fournisseurs = fournisseurs;
+	public void setFournits(List<FournisseurProduit> fournits) {
+		this.fournits = fournits;
+	}
+
+	public FournisseurProduit addFournit(FournisseurProduit fournit) {
+		getFournits().add(fournit);
+		fournit.setProduit(this);
+
+		return fournit;
+	}
+
+	public FournisseurProduit removeFournit(FournisseurProduit fournit) {
+		getFournits().remove(fournit);
+		fournit.setProduit(null);
+
+		return fournit;
 	}
 
 	public List<LotProduit> getLotProduits() {
@@ -206,6 +224,14 @@ public class Produit implements Serializable {
 
 	public void setClassePharmaceutique(ClassePharmaceutique classePharmaceutique) {
 		this.classePharmaceutique = classePharmaceutique;
+	}
+
+	public List<Fournisseur> getFournisseurs() {
+		return this.fournisseurs;
+	}
+
+	public void setFournisseurs(List<Fournisseur> fournisseurs) {
+		this.fournisseurs = fournisseurs;
 	}
 
 	public Tva getTva() {

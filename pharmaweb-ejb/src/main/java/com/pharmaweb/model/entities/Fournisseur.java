@@ -35,13 +35,17 @@ public class Fournisseur implements Serializable {
 	@JoinColumn(name="ID_ADRESSE")
 	private Adresse adresse;
 
-	//bi-directional many-to-many association to Produit
-	@ManyToMany(mappedBy="fournisseurs")
-	private List<Produit> produits;
+	//bi-directional many-to-one association to FournisseurProduit
+	@OneToMany(mappedBy="fournisseur")
+	private List<FournisseurProduit> fournits;
 
 	//bi-directional many-to-one association to LotProduit
 	@OneToMany(mappedBy="fournisseur")
 	private List<LotProduit> lotProduits;
+
+	//bi-directional many-to-many association to Produit
+	@ManyToMany(mappedBy="fournisseurs")
+	private List<Produit> produits;
 
 	public Fournisseur() {
 	}
@@ -86,12 +90,26 @@ public class Fournisseur implements Serializable {
 		this.adresse = adresse;
 	}
 
-	public List<Produit> getProduits() {
-		return this.produits;
+	public List<FournisseurProduit> getFournits() {
+		return this.fournits;
 	}
 
-	public void setProduits(List<Produit> produits) {
-		this.produits = produits;
+	public void setFournits(List<FournisseurProduit> fournits) {
+		this.fournits = fournits;
+	}
+
+	public FournisseurProduit addFournit(FournisseurProduit fournit) {
+		getFournits().add(fournit);
+		fournit.setFournisseur(this);
+
+		return fournit;
+	}
+
+	public FournisseurProduit removeFournit(FournisseurProduit fournit) {
+		getFournits().remove(fournit);
+		fournit.setFournisseur(null);
+
+		return fournit;
 	}
 
 	public List<LotProduit> getLotProduits() {
@@ -114,6 +132,14 @@ public class Fournisseur implements Serializable {
 		lotProduit.setFournisseur(null);
 
 		return lotProduit;
+	}
+
+	public List<Produit> getProduits() {
+		return this.produits;
+	}
+
+	public void setProduits(List<Produit> produits) {
+		this.produits = produits;
 	}
 
 }

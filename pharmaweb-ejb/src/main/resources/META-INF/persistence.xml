@@ -20,6 +20,8 @@
 		<class>com.pharmaweb.model.entities.CommandeFournisseurProduit</class>
 		<class>com.pharmaweb.model.entities.CommandeFournisseurProduitPK</class>
 		<class>com.pharmaweb.model.entities.Fournisseur</class>
+		<class>com.pharmaweb.model.entities.FournisseurProduit</class>
+		<class>com.pharmaweb.model.entities.FournisseurProduitPK</class>
 		<class>com.pharmaweb.model.entities.LotProduit</class>
 		<class>com.pharmaweb.model.entities.Medecin</class>
 		<class>com.pharmaweb.model.entities.Mutuelle</class>

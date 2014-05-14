@@ -1,20 +1,10 @@
 package com.pharmaweb.model.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 
 /**
@@ -62,7 +52,7 @@ public class Client implements Serializable {
 	private BigDecimal numeroSecuClient;
 
 	@Column(name="NUMERO_TEL_CLIENT")
-	private BigDecimal numeroTelClient;
+	private String numeroTelClient;
 
 	@Lob
 	@Column(name="PRENOM_CLIENT")
@@ -70,16 +60,6 @@ public class Client implements Serializable {
 
 	@Column(name="VISIBLE_CLIENT")
 	private BigDecimal visibleClient;
-
-	//bi-directional many-to-one association to Medecin
-	@ManyToOne
-	@JoinColumn(name="ID_MEDECIN")
-	private Medecin medecin;
-
-	//bi-directional many-to-one association to Statut
-	@ManyToOne
-	@JoinColumn(name="ID_STATUT")
-	private Statut statut;
 
 	//bi-directional many-to-one association to Adresse
 	@ManyToOne
@@ -96,6 +76,16 @@ public class Client implements Serializable {
 	@JoinColumn(name="ID_COTISATION")
 	private Cotisation cotisation;
 
+	//bi-directional many-to-one association to Medecin
+	@ManyToOne
+	@JoinColumn(name="ID_MEDECIN")
+	private Medecin medecin;
+
+	//bi-directional many-to-one association to Statut
+	@ManyToOne
+	@JoinColumn(name="ID_STATUT")
+	private Statut statut;
+
 	//bi-directional many-to-one association to CommandeClient
 	@OneToMany(mappedBy="client")
 	private List<CommandeClient> commandeClients;
@@ -111,7 +101,7 @@ public class Client implements Serializable {
 		return this.idClient;
 	}
 
-	public void setIdClient(final long idClient) {
+	public void setIdClient(long idClient) {
 		this.idClient = idClient;
 	}
 
@@ -119,7 +109,7 @@ public class Client implements Serializable {
 		return this.allergiesConnuesClient;
 	}
 
-	public void setAllergiesConnuesClient(final String allergiesConnuesClient) {
+	public void setAllergiesConnuesClient(String allergiesConnuesClient) {
 		this.allergiesConnuesClient = allergiesConnuesClient;
 	}
 
@@ -127,7 +117,7 @@ public class Client implements Serializable {
 		return this.dateNaissanceClient;
 	}
 
-	public void setDateNaissanceClient(final Date dateNaissanceClient) {
+	public void setDateNaissanceClient(Date dateNaissanceClient) {
 		this.dateNaissanceClient = dateNaissanceClient;
 	}
 
@@ -135,7 +125,7 @@ public class Client implements Serializable {
 		return this.mailClient;
 	}
 
-	public void setMailClient(final String mailClient) {
+	public void setMailClient(String mailClient) {
 		this.mailClient = mailClient;
 	}
 
@@ -143,7 +133,7 @@ public class Client implements Serializable {
 		return this.mdpClient;
 	}
 
-	public void setMdpClient(final String mdpClient) {
+	public void setMdpClient(String mdpClient) {
 		this.mdpClient = mdpClient;
 	}
 
@@ -151,7 +141,7 @@ public class Client implements Serializable {
 		return this.nomClient;
 	}
 
-	public void setNomClient(final String nomClient) {
+	public void setNomClient(String nomClient) {
 		this.nomClient = nomClient;
 	}
 
@@ -159,7 +149,7 @@ public class Client implements Serializable {
 		return this.numeroAdherentMutuClient;
 	}
 
-	public void setNumeroAdherentMutuClient(final String numeroAdherentMutuClient) {
+	public void setNumeroAdherentMutuClient(String numeroAdherentMutuClient) {
 		this.numeroAdherentMutuClient = numeroAdherentMutuClient;
 	}
 
@@ -167,7 +157,7 @@ public class Client implements Serializable {
 		return this.numeroClient;
 	}
 
-	public void setNumeroClient(final String numeroClient) {
+	public void setNumeroClient(String numeroClient) {
 		this.numeroClient = numeroClient;
 	}
 
@@ -175,15 +165,15 @@ public class Client implements Serializable {
 		return this.numeroSecuClient;
 	}
 
-	public void setNumeroSecuClient(final BigDecimal numeroSecuClient) {
+	public void setNumeroSecuClient(BigDecimal numeroSecuClient) {
 		this.numeroSecuClient = numeroSecuClient;
 	}
 
-	public BigDecimal getNumeroTelClient() {
+	public String getNumeroTelClient() {
 		return this.numeroTelClient;
 	}
 
-	public void setNumeroTelClient(final BigDecimal numeroTelClient) {
+	public void setNumeroTelClient(String numeroTelClient) {
 		this.numeroTelClient = numeroTelClient;
 	}
 
@@ -191,7 +181,7 @@ public class Client implements Serializable {
 		return this.prenomClient;
 	}
 
-	public void setPrenomClient(final String prenomClient) {
+	public void setPrenomClient(String prenomClient) {
 		this.prenomClient = prenomClient;
 	}
 
@@ -199,31 +189,15 @@ public class Client implements Serializable {
 		return this.visibleClient;
 	}
 
-	public void setVisibleClient(final BigDecimal visibleClient) {
+	public void setVisibleClient(BigDecimal visibleClient) {
 		this.visibleClient = visibleClient;
-	}
-
-	public Medecin getMedecin() {
-		return this.medecin;
-	}
-
-	public void setMedecin(final Medecin medecin) {
-		this.medecin = medecin;
-	}
-
-	public Statut getStatut() {
-		return this.statut;
-	}
-
-	public void setStatut(final Statut statut) {
-		this.statut = statut;
 	}
 
 	public Adresse getAdresse() {
 		return this.adresse;
 	}
 
-	public void setAdresse(final Adresse adresse) {
+	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
 	}
 
@@ -231,7 +205,7 @@ public class Client implements Serializable {
 		return this.centreMutuelle;
 	}
 
-	public void setCentreMutuelle(final CentreMutuelle centreMutuelle) {
+	public void setCentreMutuelle(CentreMutuelle centreMutuelle) {
 		this.centreMutuelle = centreMutuelle;
 	}
 
@@ -239,27 +213,43 @@ public class Client implements Serializable {
 		return this.cotisation;
 	}
 
-	public void setCotisation(final Cotisation cotisation) {
+	public void setCotisation(Cotisation cotisation) {
 		this.cotisation = cotisation;
+	}
+
+	public Medecin getMedecin() {
+		return this.medecin;
+	}
+
+	public void setMedecin(Medecin medecin) {
+		this.medecin = medecin;
+	}
+
+	public Statut getStatut() {
+		return this.statut;
+	}
+
+	public void setStatut(Statut statut) {
+		this.statut = statut;
 	}
 
 	public List<CommandeClient> getCommandeClients() {
 		return this.commandeClients;
 	}
 
-	public void setCommandeClients(final List<CommandeClient> commandeClients) {
+	public void setCommandeClients(List<CommandeClient> commandeClients) {
 		this.commandeClients = commandeClients;
 	}
 
-	public CommandeClient addCommandeClient(final CommandeClient commandeClient) {
-		this.getCommandeClients().add(commandeClient);
+	public CommandeClient addCommandeClient(CommandeClient commandeClient) {
+		getCommandeClients().add(commandeClient);
 		commandeClient.setClient(this);
 
 		return commandeClient;
 	}
 
-	public CommandeClient removeCommandeClient(final CommandeClient commandeClient) {
-		this.getCommandeClients().remove(commandeClient);
+	public CommandeClient removeCommandeClient(CommandeClient commandeClient) {
+		getCommandeClients().remove(commandeClient);
 		commandeClient.setClient(null);
 
 		return commandeClient;
@@ -269,19 +259,19 @@ public class Client implements Serializable {
 		return this.ordonnances;
 	}
 
-	public void setOrdonnances(final List<Ordonnance> ordonnances) {
+	public void setOrdonnances(List<Ordonnance> ordonnances) {
 		this.ordonnances = ordonnances;
 	}
 
-	public Ordonnance addOrdonnance(final Ordonnance ordonnance) {
-		this.getOrdonnances().add(ordonnance);
+	public Ordonnance addOrdonnance(Ordonnance ordonnance) {
+		getOrdonnances().add(ordonnance);
 		ordonnance.setClient(this);
 
 		return ordonnance;
 	}
 
-	public Ordonnance removeOrdonnance(final Ordonnance ordonnance) {
-		this.getOrdonnances().remove(ordonnance);
+	public Ordonnance removeOrdonnance(Ordonnance ordonnance) {
+		getOrdonnances().remove(ordonnance);
 		ordonnance.setClient(null);
 
 		return ordonnance;

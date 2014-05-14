@@ -33,23 +33,10 @@ public class CommandeClient implements Serializable {
 	@JoinColumn(name="ID_ADRESSE")
 	private Adresse adresse;
 
-	//bi-directional many-to-one association to Pharmacie
-	@ManyToOne
-	@JoinColumn(name="ID_PHARMACIE")
-	private Pharmacie pharmacie;
-
 	//bi-directional many-to-one association to Client
 	@ManyToOne
 	@JoinColumn(name="ID_CLIENT")
 	private Client client;
-
-	//bi-directional many-to-one association to Discussion
-	@OneToMany(mappedBy="commandeClient")
-	private List<Discussion> discussions;
-
-	//bi-directional many-to-one association to CommandeLotProduit
-	@OneToMany(mappedBy="commandeClient")
-	private List<CommandeLotProduit> estDansLaCommandeClients;
 
 	//bi-directional many-to-many association to Ordonnance
 	@ManyToMany
@@ -63,6 +50,19 @@ public class CommandeClient implements Serializable {
 			}
 		)
 	private List<Ordonnance> ordonnances;
+
+	//bi-directional many-to-one association to Pharmacie
+	@ManyToOne
+	@JoinColumn(name="ID_PHARMACIE")
+	private Pharmacie pharmacie;
+
+	//bi-directional many-to-one association to Discussion
+	@OneToMany(mappedBy="commandeClient")
+	private List<Discussion> discussions;
+
+	//bi-directional many-to-one association to CommandeLotProduit
+	@OneToMany(mappedBy="commandeClient")
+	private List<CommandeLotProduit> estDansLaCommandeClients;
 
 	public CommandeClient() {
 	}
@@ -99,20 +99,28 @@ public class CommandeClient implements Serializable {
 		this.adresse = adresse;
 	}
 
-	public Pharmacie getPharmacie() {
-		return this.pharmacie;
-	}
-
-	public void setPharmacie(Pharmacie pharmacie) {
-		this.pharmacie = pharmacie;
-	}
-
 	public Client getClient() {
 		return this.client;
 	}
 
 	public void setClient(Client client) {
 		this.client = client;
+	}
+
+	public List<Ordonnance> getOrdonnances() {
+		return this.ordonnances;
+	}
+
+	public void setOrdonnances(List<Ordonnance> ordonnances) {
+		this.ordonnances = ordonnances;
+	}
+
+	public Pharmacie getPharmacie() {
+		return this.pharmacie;
+	}
+
+	public void setPharmacie(Pharmacie pharmacie) {
+		this.pharmacie = pharmacie;
 	}
 
 	public List<Discussion> getDiscussions() {
@@ -157,14 +165,6 @@ public class CommandeClient implements Serializable {
 		estDansLaCommandeClient.setCommandeClient(null);
 
 		return estDansLaCommandeClient;
-	}
-
-	public List<Ordonnance> getOrdonnances() {
-		return this.ordonnances;
-	}
-
-	public void setOrdonnances(List<Ordonnance> ordonnances) {
-		this.ordonnances = ordonnances;
 	}
 
 }
