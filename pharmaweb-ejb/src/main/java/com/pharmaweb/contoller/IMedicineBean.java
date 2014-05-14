@@ -6,10 +6,23 @@ import javax.ejb.Remote;
 
 import com.pharmaweb.model.entities.ClassePharmaceutique;
 import com.pharmaweb.model.entities.Produit;
+import com.pharmaweb.model.entities.Tva;
+import com.pharmaweb.model.entities.TypeDeRemboursement;
 
+/**
+ * 
+ * @author Anthony DENAUD
+ *
+ */
 @Remote
 public interface IMedicineBean {
-	public List<Produit> getAll();
-	public List<ClassePharmaceutique> getFamilies();
-	public int add(Produit produit);
+	List<Produit> getAll();
+	Produit getByID(int idProduit);
+	List<ClassePharmaceutique> getFamilies();
+	ClassePharmaceutique getFamilyById(int idFamily);
+	int add(Produit produit);
+	List<Tva> getAllTva();
+	Tva getTvaById(int idTva);
+	List<TypeDeRemboursement> getTypesRemboursement();
+	TypeDeRemboursement getTypeRemboursementById(int idTypeRemboursement);
 }

@@ -2,9 +2,15 @@ package com.pharmaweb.admin.servlets.medicines;
 
 import com.pharmaweb.admin.i18n.I18n;
 import com.pharmaweb.contoller.IMedicineBean;
+import com.pharmaweb.controller.ISupplierBean;
+import com.pharmaweb.model.entities.ClassePharmaceutique;
+import com.pharmaweb.model.entities.Fournisseur;
 import com.pharmaweb.model.entities.Produit;
+import com.pharmaweb.model.entities.Tva;
+import com.pharmaweb.model.entities.TypeDeRemboursement;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -16,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation class MedicineServlet
+ * @author Anthony DENAUD
  */
 @WebServlet("/Medicine")
 public class MedicineServlet extends HttpServlet {
@@ -51,18 +58,18 @@ public class MedicineServlet extends HttpServlet {
 		}
 		else if(request.getParameter("edit") != null){
 			try{
-				int id_medicine = Integer.parseInt(request.getParameter("edit"));
-				
-				//TODO load medicine code
-							
-				
+				int idProduit = Integer.parseInt(request.getParameter("edit"));
+				Produit produit = this.medicineBean.getByID(idProduit);
+				request.setAttribute("produit", produit);
 			}catch(NumberFormatException e){
 			}
 			this.dispatcher = getServletContext().getRequestDispatcher("/medicine.jsp");
 			this.dispatcher.forward(request, response);
 		}else{
-			
+
+			request.setAttribute("remboursements", medicineBean.getTypesRemboursement());
 			request.setAttribute("classes", medicineBean.getFamilies());
+			request.setAttribute("tvas", medicineBean.getAllTva());
 			
 			this.dispatcher = getServletContext().getRequestDispatcher("/medicine.jsp");
 			this.dispatcher.forward(request, response);			
@@ -74,42 +81,57 @@ public class MedicineServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("name");
-		String manufacter = request.getParameter("name");
-		String description = request.getParameter("description");
-		//int classe = Integer.parseInt(request.getParameter("classe"));
-		String ordonance = request.getParameter("ordonance");
-		
-		request.setAttribute("ordonance", ordonance);
-		
+
 		if(request.getParameter("edit") != null){
 			try{
+				int idProduit = Integer.parseInt(request.getParameter("edit"));
+				Produit produit = this.medicineBean.getByID(idProduit);
 				
-				int id_medicine = Integer.parseInt(request.getParameter("edit"));
+				this.save(request, produit);
+				this.edit(produit);
 				
-				//TODO load medicine code
-				
+				request.getSession().setAttribute("message", I18n._(I18n.MEDICINE_EDIT_SUCCESS));
 				response.sendRedirect("Medicine");
 				
 			}catch(NumberFormatException e){
 			}
 		}else{
-			
 			Produit produit = new Produit();
 			
-			produit.setNomProduit(name);
-			produit.setNomFabriquantProduit(manufacter);
-			produit.setDecriptionProduit(description);
-			
-			medicineBean.add(produit);
+			this.save(request, produit);
+			this.add(produit);
 			
 			request.getSession().setAttribute("message", I18n._(I18n.MEDICINE_CREATE_SUCCESS));
 			response.sendRedirect("Medicines");
-			
 		}
-		
-//		this.dispatcher = getServletContext().getRequestDispatcher("/medicine.jsp");
-//		this.dispatcher.forward(request, response);		
 	}
-
+	
+	private void save(HttpServletRequest request, Produit produit){
+		String name = request.getParameter("name");
+		String manufacter = request.getParameter("manufacter");
+		String description = request.getParameter("description");
+		int idClasse = Integer.parseInt(request.getParameter("classe"));
+		int idTva = Integer.parseInt(request.getParameter("tva"));
+		int idTypeRemboursement = Integer.parseInt(request.getParameter("remboursement"));
+		String ordonance = request.getParameter("ordonance");
+		ordonance = ordonance.equals("1") ? "1" : "0";
+		
+		ClassePharmaceutique classe = this.medicineBean.getFamilyById(idClasse);
+		Tva tva = this.medicineBean.getTvaById(idTva);
+		TypeDeRemboursement typeRemboursement = this.medicineBean.getTypeRemboursementById(idTypeRemboursement);	
+		
+		produit.setNomProduit(name);
+		produit.setNomFabriquantProduit(manufacter);
+		produit.setDecriptionProduit(description);
+		produit.setClassePharmaceutique(classe);
+		produit.setTypeDeRemboursement(typeRemboursement);
+		produit.setTva(tva);
+		produit.setRequiereOrdonnanceProduit(new BigDecimal(ordonance));		
+	}
+	private void edit(Produit produit){
+		//medicineBean.update(produit);
+	}
+	private void add(Produit produit){
+		medicineBean.add(produit);
+	}
 }

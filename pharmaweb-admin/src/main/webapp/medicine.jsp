@@ -11,32 +11,44 @@
 	
 		<div class="form-group">
 			<label for="name">Nom</label>
-			<input type="text" class="form-control" id="name" name="name">
+			<input type="text" class="form-control" id="name" name="name" value="${produit.nomProduit}">
 		</div>
 		
 		<div class="form-group">
 			<label for="manufacter">Fabricant</label> 
-			<input type="text" class="form-control" id="manufacter"name="manufacter"/>
+			<input type="text" class="form-control" id="manufacter"name="manufacter" value="${produit.nomFabriquantProduit}"/>
 		</div>
 		
 		<div class="form-group">
 			<label for="description">Description</label> 
-			<textarea class="form-control" id="description"name="description"></textarea>
+			<textarea class="form-control" id="description"name="description">${produit.decriptionProduit}</textarea>
 		</div>
 		
 		<label for="classe">Classe pharmaceutique</label>
 		<select class="form-control" id="classe" name="classe">
-		
 			<c:forEach var="classe" items="${classes}">
 				<option value="${classe.idClassePharmaceutique}">${classe.libelleClassePharmaceutique}</option>
 			</c:forEach>
-				
-		
 		</select>
+	
+	
+		<label for="tva">TVA</label>
+		<select class="form-control" id="tva" name="tva">
+			<c:forEach var="tva" items="${tvas}">
+				<option value="${tva.idTva}">${tva.tauxTva}</option>
+			</c:forEach>
+		</select>
+		
+		<label for="remboursement">Taux de remboursement</label>
+		<select class="form-control" id="remboursement" name="remboursement">
+			<c:forEach var="remboursement" items="${remboursements}">
+				<option value="${remboursement.idTypeDeRemboursement}">${remboursement.libelleTypeDeRemboursement}</option>
+			</c:forEach>
+		</select>		
 		
 		<div class="checkbox">
 			<label>
-				<input type="checkbox" name="ordonance" value="true"> Uniquement sur ordonnace
+				<input type="checkbox" name="ordonance" value="1"> Uniquement sur ordonnace
 			</label>
 		</div>
 		
