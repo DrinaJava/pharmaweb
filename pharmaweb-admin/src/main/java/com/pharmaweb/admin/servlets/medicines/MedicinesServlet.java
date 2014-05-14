@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pharmaweb.contoller.IMedicineBean;
+import com.pharmaweb.controller.IMedicineBean;
 
 /**
  * Servlet implementation class MedicamentsServlet

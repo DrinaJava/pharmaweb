@@ -5,6 +5,7 @@
 
 <link href="css/fonts.css" type="text/css" rel="stylesheet" />
 <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<link href="css/bootstrap.min.css" rel="stylesheet" />
 <link href="css/styles.css" type="text/css" rel="stylesheet" />
 
 <title>Pharmaweb</title>
