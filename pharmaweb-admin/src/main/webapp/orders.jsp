@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
 <jsp:include page="includes/header.jsp" />
@@ -22,27 +23,26 @@
 				<thead>
 					<tr>
 						<th>S&eacute;lection</th>
+						<th>N° de commande</th>
 						<th>Client</th>
 						<th>M&eacute;decin traitant</th>
 						<th>Date</th>
-						<th>N° de commande</th>
-						<th>Quantit&eacute;</th>
-						<th>Prix total</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
+				
+				<c:forEach var="commande" items="${commandes}">
 					<tr>
 						<td><input type="checkbox" name="order" value="selected"></td>
-						<td><a href="Client?infos">Jean-Phil Mevetmont</a></td>
-						<td>Gr&eacute;gory House</td>
-						<td>15/05/2014</td>
-						<td>001</td>
-						<td>7 Médicaments</td>
-						<td>78euros</td>
-						<td class="orderinfo"><a href="Order"><i
+						<td>${commande.numCommandeClient}</td>
+						<td><a href="Client?infos">${commande.client.nomClient}</a></td>
+						<td>${commande.client.medecin.nomMedecin}</td>
+						<td>${commande.client.dateNaissanceClient}</td>
+						<td class="orderinfo"><a href="Order?info=${commande.idCommandeClient}"><i
 								class="fa fa-search-plus fa-2x"></i></a></td>
 					</tr>
+				</c:forEach>
 				</tbody>
 			</table>
 

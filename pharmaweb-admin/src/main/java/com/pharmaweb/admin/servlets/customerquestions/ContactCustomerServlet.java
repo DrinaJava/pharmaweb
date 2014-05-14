@@ -1,8 +1,7 @@
-package com.pharmaweb.admin.servlets.orders;
+package com.pharmaweb.admin.servlets.customerquestions;
 
 import java.io.IOException;
 
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,26 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pharmaweb.contoller.IOrderBean;
 /**
- * @author Mnky
- *
+ * Servlet implementation class LoginServlet
  */
-/**
- * Servlet implementation class OrderServlet
- */
-@WebServlet("/Order" )
-public class OrderServlet extends HttpServlet {
+@WebServlet("/ContactCustomer")
+public class ContactCustomerServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
 	private RequestDispatcher dispatcher;
 
-	@EJB
-	private IOrderBean orderBean;
+
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public OrderServlet() {
+	public ContactCustomerServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -39,25 +33,8 @@ public class OrderServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-
-		if(request.getParameter("info") != null){
-			try{
-				final int id_order = Integer.parseInt(request.getParameter("info"));
-
-				request.setAttribute("commande", this.orderBean.getOrderById(id_order));
-				request.setAttribute("lignesCommande", this.orderBean.getOrderLines(id_order));
-
-
-			}catch(final NumberFormatException e){
-			}
-			this.dispatcher = this.getServletContext().getRequestDispatcher("/order.jsp");
-			this.dispatcher.forward(request, response);
-		}else{
-
-
-			this.dispatcher = this.getServletContext().getRequestDispatcher("/order.jsp");
-			this.dispatcher.forward(request, response);
-		}
+		this.dispatcher = this.getServletContext().getRequestDispatcher("/contactcustomer.jsp");
+		this.dispatcher.forward(request, response);
 	}
 
 	/**
@@ -67,5 +44,4 @@ public class OrderServlet extends HttpServlet {
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
-
 }

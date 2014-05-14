@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <jsp:include page="includes/header.jsp" />
 
 <script src="js/medicines.js" type="text/javascript"></script>
 
 <section>
-	<h1>Détail de la commande</h1>
+	<h1>Détail de la commande n° ${commande.numCommandeClient}</h1>
 	
 <div class="row">
 
@@ -24,44 +24,47 @@
 	  <tbody>
 	   <tr>
 		<td><b>N° client</b></td>
-		<td>009</td>
+		<td>${commande.client.numeroClient}</td>
 	  </tr>
 	  <tr>
 		<td><b>Nom</b></td>
-		<td>Mevetmont</td>
+		<td>${commande.client.nomClient}</td>
 	  </tr>
 	  <tr>
 		 <td><b>Pr&eacute;nom</b></td>
-		 <td>Jean-Phil</td>
+		 <td>${commande.client.prenomClient}</td>
 	  </tr>
 	  <tr>
 		 <td><b>M&eacute;decin traitant</b></td>
-		 <td>Gr&eacute;gory House</td>
+		 <td>${commande.client.medecin.nomMedecin} ${commande.client.medecin.prenomMedecin}</td>
 	  </tr>
 	  <tr>
 		  <td><b>Date de naissance</b></td>
-		  <td>10/02/1980</td>
+		  <td>${commande.client.dateNaissanceClient}</td>
+	  </tr>
+	  <tr>
+		  <td><b>N° de sécurité sociale</b></td>
+		  <td>${commande.client.numeroSecuClient}</td>
+	  </tr>
+	  <tr>
+		  <td><b>N° d'adhérent mutuelle</b></td>
+		  <td>${commande.client.numeroAdherentMutuClient}</td>
 	  </tr>
 	  <tr>
 		  <td><b>Téléphone</b></td>
-		  <td>0610278949</td>
+		  <td>${commande.client.numeroTelClient}</td>
 	  </tr>
 	  <tr>
 		  <td><b>Email</b></td>
-		  <td>jpmevetmont@hotmail.com</td>
+		  <td>${commande.client.mailClient}</td>
 	  </tr>
 	  <tr>
 		  <td><b>Localité</b></td>
-		  <td>Toulon</td>
+		  <td>${commande.client.adresse.ville}</td>
 	  </tr>
 	  <tr>
 		  <td><b>Allergies</b></td>
-		  <td>
-		  	<ul>
-		  		<li>Crustac&eacute;s</li>
-		  		<li>Cacahuetes</li>
-		  	</ul>
-		  </td>
+		  <td>${commande.client.allergiesConnuesClient}</td>
 	  </tr>  
 	  </tbody>
 	  </table>
@@ -85,8 +88,9 @@
 				</tr>
 			</thead>
 			<tbody>
+			<c:forEach var="ligneCommande" items="${lignesCommande}">
 				<tr>
-					<td>DAFALGAN CODEINE</td>
+					<td>${ligneCommande.lotProduit.produit.nomProduit}</td>
 					<td>Antalgiques</td>
 					<td>Nom fabriquant</td>
 					<td>0123</td>
@@ -96,18 +100,7 @@
 					<td>4,94 €</td>
 					
 				</tr>	
-				
-				<tr>
-					<td>XANAX</td>
-					<td>Neurologie</td>
-					<td>Nom fabriquant</td>
-					<td>0222</td>
-					<td>OUI</td>
-					<td>4 €</td>
-					<td>1</td>
-					<td>4 €</td>
-					
-				</tr>		
+			</c:forEach>		
 			</tbody>
 		</table>
 	</div>
