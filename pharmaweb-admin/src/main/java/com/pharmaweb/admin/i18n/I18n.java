@@ -25,11 +25,15 @@ public class I18n {
 		try {
 			Ini ini = new Ini(new File("fr.ini"));
 			
-			value = ini.get("All",key);
+			value = "String not found";
+			
+			if(ini.get("All",key) != null){
+				value = ini.get("All",key);
+			}
 			
 			
 		} catch(IOException e) {
-			value = "String not found";
+			value = "Unable to read ini file";
 		}
 		
 		return value;

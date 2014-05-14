@@ -20,6 +20,8 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RequestDispatcher dispatcher;
 	
+	
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -49,7 +51,7 @@ public class LoginServlet extends HttpServlet {
 		}
 		else{
 			request.setAttribute("message", I18n._(I18n.INVALID_LOGIN));
-			this.dispatcher = getServletContext().getRequestDispatcher("login.jsp");
+			this.dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
 			this.dispatcher.forward(request, response);
 		}
 	}

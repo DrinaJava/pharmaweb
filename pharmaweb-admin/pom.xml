@@ -104,10 +104,15 @@
 			<version>2.2.4</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.ini4j</groupId>
-		    <artifactId>ini4j</artifactId>
-		    <version>0.5.2</version>
-		</dependency>		
+			<groupId>org.ini4j</groupId>
+			<artifactId>ini4j</artifactId>
+			<version>0.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
