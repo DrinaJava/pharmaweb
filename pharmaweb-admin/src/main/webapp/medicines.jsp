@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <jsp:include page="includes/header.jsp" />
 
@@ -27,13 +27,21 @@
 					</tr>
 				</thead>
 				<tbody>
+				
+				
+				<c:forEach var="produit" items="${produits}">
+				
+				
 					<tr>
-						<td><a href="Medicine?edit=0">Row 1 Data 1</a></td>
-						<td>Row 1 Data 2</td>
-						<td class="edit"><a href="Medicine?edit=0"><i
-								class="fa fa-pencil fa-2x"></i></a> <a href="Medicine?del=0"><i
+						<td><a href="Medicine?edit=${produit.idProduit}">${produit.nomProduit}</a></td>
+						<td>${produit.nomFabriquantProduit}</td>
+						<td class="edit"><a href="Medicine?edit=${produit.idProduit}"><i
+								class="fa fa-pencil fa-2x"></i></a> <a href="Medicine?del=${produit.idProduit}"><i
 								class="fa fa-trash-o fa-2x"></i></a></td>
 					</tr>
+					
+				</c:forEach>
+					
 				</tbody>
 			</table>
 

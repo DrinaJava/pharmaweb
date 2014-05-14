@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
     
 <jsp:include page="includes/header.jsp"/>
 
@@ -26,6 +26,12 @@
 		
 		<label for="classe">Classe pharmaceutique</label>
 		<select class="form-control" id="classe" name="classe">
+		
+			<c:forEach var="classe" items="${classes}">
+				<option value="${classe.idClassePharmaceutique}">${classe.libelleClassePharmaceutique}</option>
+			</c:forEach>
+				
+		
 		</select>
 		
 		<div class="checkbox">

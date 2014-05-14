@@ -1,9 +1,12 @@
 package com.pharmaweb.admin.servlets.medicines;
 
 import com.pharmaweb.admin.i18n.I18n;
+import com.pharmaweb.contoller.IMedicineBean;
+import com.pharmaweb.model.entities.Produit;
 
 import java.io.IOException;
 
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +22,9 @@ public class MedicineServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RequestDispatcher dispatcher;
        
+	@EJB
+	private IMedicineBean medicineBean;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -55,6 +61,9 @@ public class MedicineServlet extends HttpServlet {
 			this.dispatcher = getServletContext().getRequestDispatcher("/medicine.jsp");
 			this.dispatcher.forward(request, response);
 		}else{
+			
+			request.setAttribute("classes", medicineBean.getFamilies());
+			
 			this.dispatcher = getServletContext().getRequestDispatcher("/medicine.jsp");
 			this.dispatcher.forward(request, response);			
 		}
@@ -85,7 +94,14 @@ public class MedicineServlet extends HttpServlet {
 			}catch(NumberFormatException e){
 			}
 		}else{
-			//TODO add medic code
+			
+			Produit produit = new Produit();
+			
+			produit.setNomProduit(name);
+			produit.setNomFabriquantProduit(manufacter);
+			produit.setDecriptionProduit(description);
+			
+			medicineBean.add(produit);
 			
 			request.getSession().setAttribute("message", I18n._(I18n.MEDICINE_CREATE_SUCCESS));
 			response.sendRedirect("Medicines");
