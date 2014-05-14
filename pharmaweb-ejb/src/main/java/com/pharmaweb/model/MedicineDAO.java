@@ -37,6 +37,7 @@ public class MedicineDAO extends DAO {
 	
 	public int add(Produit produit) {
 		entityManager.persist(produit);
+		entityManager.flush();
 		return (int) produit.getIdProduit();
 	}
 
@@ -66,5 +67,10 @@ public class MedicineDAO extends DAO {
 	public Produit getByID(int idProduit) {
 		String sql = "SELECT p FROM Produit p WHERE p.idProduit = " + String.valueOf(idProduit);
 		return (Produit) entityManager.createQuery(sql).getSingleResult();
+	}
+
+
+	public void update(Produit produit) {
+		entityManager.merge(produit);
 	}
 }

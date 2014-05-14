@@ -4,4 +4,10 @@
   <welcome-file-list>
     <welcome-file>Login</welcome-file>
   </welcome-file-list>
+  <web:jsp-config>
+  		<web:jsp-property-group>
+  			<web:url-pattern>*.jsp</web:url-pattern>
+  			<web:page-encoding>UTF-8</web:page-encoding>
+  		</web:jsp-property-group>
+  </web:jsp-config>
 </web-app>

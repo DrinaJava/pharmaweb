@@ -9,7 +9,14 @@
 <section>
 	<h1>Médicaments</h1>
 	
-	-- ${sessionScope.message} --
+	
+	<c:if test="${sessionScope.message != null}">
+		<div class="alert alert-${sessionScope.message.style}">
+			${sessionScope.message.text}
+		</div>
+	</c:if>
+	
+	
 
 	<div class="text-right">
 		<a href="Medicine" class="btn btn-success">Nouveau médicament</a>

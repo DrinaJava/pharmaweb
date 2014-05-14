@@ -18,11 +18,15 @@ import com.pharmaweb.model.entities.TypeDeRemboursement;
 public interface IMedicineBean {
 	List<Produit> getAll();
 	Produit getByID(int idProduit);
+	void update(Produit produit);
+	int add(Produit produit);
+	
 	List<ClassePharmaceutique> getFamilies();
 	ClassePharmaceutique getFamilyById(int idFamily);
-	int add(Produit produit);
+	
 	List<Tva> getAllTva();
 	Tva getTvaById(int idTva);
+	
 	List<TypeDeRemboursement> getTypesRemboursement();
 	TypeDeRemboursement getTypeRemboursementById(int idTypeRemboursement);
 }

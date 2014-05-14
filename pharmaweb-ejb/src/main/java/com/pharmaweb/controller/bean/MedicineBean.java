@@ -71,4 +71,8 @@ public class MedicineBean extends Bean implements IMedicineBean {
 		return this.medicineDAO.getByID(idProduit);
 	}
 
+	@Override
+	public void update(Produit produit) {
+		this.medicineDAO.update(produit);
+	}
 }

@@ -40,6 +40,8 @@ public class MedicinesServlet extends HttpServlet {
 		
 		this.dispatcher = getServletContext().getRequestDispatcher("/medicines.jsp");
 		this.dispatcher.forward(request, response);
+		
+		request.getSession().removeAttribute("message");
 	}
 
 	/**

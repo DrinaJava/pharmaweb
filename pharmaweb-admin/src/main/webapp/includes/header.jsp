@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,9 +26,9 @@
 			<nav>
 				<a href="Home">Accueil</a>
 				<a href="Orders">Commandes</a>
-				<a href="Medicines">Médicaments</a>
+				<a href="Medicines">MÃ©dicaments</a>
 				<a href="Pharmacies">Pharmacies</a>
-				<a href="Resupply">Réapprovisionnement</a>
+				<a href="Resupply">RÃ©approvisionnement</a>
 				
 			</nav>
 

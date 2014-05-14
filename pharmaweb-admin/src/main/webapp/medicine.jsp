@@ -27,7 +27,12 @@
 		<label for="classe">Classe pharmaceutique</label>
 		<select class="form-control" id="classe" name="classe">
 			<c:forEach var="classe" items="${classes}">
-				<option value="${classe.idClassePharmaceutique}">${classe.libelleClassePharmaceutique}</option>
+					<c:if test="${classe.idClassePharmaceutique == produit.classePharmaceutique.idClassePharmaceutique}">
+						<option value="${classe.idClassePharmaceutique}" selected="selected">${classe.libelleClassePharmaceutique}</option>
+					</c:if>
+					<c:if test="${classe.idClassePharmaceutique != produit.classePharmaceutique.idClassePharmaceutique}">
+						<option value="${classe.idClassePharmaceutique}">${classe.libelleClassePharmaceutique}</option>
+					</c:if>				
 			</c:forEach>
 		</select>
 	
@@ -35,20 +40,36 @@
 		<label for="tva">TVA</label>
 		<select class="form-control" id="tva" name="tva">
 			<c:forEach var="tva" items="${tvas}">
-				<option value="${tva.idTva}">${tva.tauxTva}</option>
+					<c:if test="${tva.idTva == produit.tva.idTva}">
+						<option value="${tva.idTva}" selected="selected">${tva.tauxTva}</option>
+					</c:if>
+					<c:if test="${tva.idTva != produit.tva.idTva}">
+						<option value="${tva.idTva}">${tva.tauxTva}</option>
+					</c:if>	
 			</c:forEach>
 		</select>
 		
 		<label for="remboursement">Taux de remboursement</label>
 		<select class="form-control" id="remboursement" name="remboursement">
 			<c:forEach var="remboursement" items="${remboursements}">
-				<option value="${remboursement.idTypeDeRemboursement}">${remboursement.libelleTypeDeRemboursement}</option>
+			
+					<c:if test="${remboursement.idTypeDeRemboursement == produit.typeDeRemboursement.idTypeDeRemboursement}">
+						<option value="${remboursement.idTypeDeRemboursement}" selected="selected">${remboursement.libelleTypeDeRemboursement}</option>
+					</c:if>
+					<c:if test="${remboursement.idTypeDeRemboursement != produit.typeDeRemboursement.idTypeDeRemboursement}">
+						<option value="${remboursement.idTypeDeRemboursement}">${remboursement.libelleTypeDeRemboursement}</option>
+					</c:if>	
 			</c:forEach>
 		</select>		
 		
 		<div class="checkbox">
 			<label>
-				<input type="checkbox" name="ordonance" value="1"> Uniquement sur ordonnace
+				<c:if test="${ordonnance == true}">
+					<input type="checkbox" name="ordonance" value="1" checked="checked"> Uniquement sur ordonnace
+				</c:if>
+				<c:if test="${ordonnance == false}">
+					<input type="checkbox" name="ordonance" value="1"> Uniquement sur ordonnace
+				</c:if>
 			</label>
 		</div>
 		

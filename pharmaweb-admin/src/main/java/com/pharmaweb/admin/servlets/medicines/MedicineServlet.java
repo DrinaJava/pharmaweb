@@ -1,5 +1,6 @@
 package com.pharmaweb.admin.servlets.medicines;
 
+import com.pharmaweb.admin.Message;
 import com.pharmaweb.admin.i18n.I18n;
 import com.pharmaweb.contoller.IMedicineBean;
 import com.pharmaweb.controller.ISupplierBean;
@@ -60,6 +61,13 @@ public class MedicineServlet extends HttpServlet {
 			try{
 				int idProduit = Integer.parseInt(request.getParameter("edit"));
 				Produit produit = this.medicineBean.getByID(idProduit);
+				
+				boolean ordo = produit.getRequiereOrdonnanceProduit().toString().equals("1") ? true : false;
+				
+				request.setAttribute("ordonnance", ordo);
+				request.setAttribute("remboursements", medicineBean.getTypesRemboursement());
+				request.setAttribute("classes", medicineBean.getFamilies());
+				request.setAttribute("tvas", medicineBean.getAllTva());
 				request.setAttribute("produit", produit);
 			}catch(NumberFormatException e){
 			}
@@ -90,8 +98,8 @@ public class MedicineServlet extends HttpServlet {
 				this.save(request, produit);
 				this.edit(produit);
 				
-				request.getSession().setAttribute("message", I18n._(I18n.MEDICINE_EDIT_SUCCESS));
-				response.sendRedirect("Medicine");
+				request.getSession().setAttribute("message", new Message("", "success", I18n._(I18n.MEDICINE_EDIT_SUCCESS)));
+				response.sendRedirect("Medicines");
 				
 			}catch(NumberFormatException e){
 			}
@@ -101,7 +109,7 @@ public class MedicineServlet extends HttpServlet {
 			this.save(request, produit);
 			this.add(produit);
 			
-			request.getSession().setAttribute("message", I18n._(I18n.MEDICINE_CREATE_SUCCESS));
+			request.getSession().setAttribute("message", new Message("", "success", I18n._(I18n.MEDICINE_CREATE_SUCCESS)));
 			response.sendRedirect("Medicines");
 		}
 	}
@@ -114,7 +122,7 @@ public class MedicineServlet extends HttpServlet {
 		int idTva = Integer.parseInt(request.getParameter("tva"));
 		int idTypeRemboursement = Integer.parseInt(request.getParameter("remboursement"));
 		String ordonance = request.getParameter("ordonance");
-		ordonance = ordonance.equals("1") ? "1" : "0";
+		ordonance = ordonance == null ? "0" : "1";
 		
 		ClassePharmaceutique classe = this.medicineBean.getFamilyById(idClasse);
 		Tva tva = this.medicineBean.getTvaById(idTva);
@@ -129,7 +137,7 @@ public class MedicineServlet extends HttpServlet {
 		produit.setRequiereOrdonnanceProduit(new BigDecimal(ordonance));		
 	}
 	private void edit(Produit produit){
-		//medicineBean.update(produit);
+		medicineBean.update(produit);
 	}
 	private void add(Produit produit){
 		medicineBean.add(produit);
