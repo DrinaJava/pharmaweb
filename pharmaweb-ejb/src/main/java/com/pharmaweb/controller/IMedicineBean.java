@@ -1,4 +1,4 @@
-package com.pharmaweb.contoller;
+package com.pharmaweb.controller;
 
 import java.util.List;
 

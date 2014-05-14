@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
-import com.pharmaweb.contoller.IMedicineBean;
+import com.pharmaweb.controller.IMedicineBean;
 import com.pharmaweb.model.MedicineDAO;
 import com.pharmaweb.model.entities.ClassePharmaceutique;
 import com.pharmaweb.model.entities.Produit;

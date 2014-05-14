@@ -2,10 +2,8 @@ package com.pharmaweb.admin.servlets.medicines;
 
 import com.pharmaweb.admin.Message;
 import com.pharmaweb.admin.i18n.I18n;
-import com.pharmaweb.contoller.IMedicineBean;
-import com.pharmaweb.controller.ISupplierBean;
+import com.pharmaweb.controller.IMedicineBean;
 import com.pharmaweb.model.entities.ClassePharmaceutique;
-import com.pharmaweb.model.entities.Fournisseur;
 import com.pharmaweb.model.entities.Produit;
 import com.pharmaweb.model.entities.Tva;
 import com.pharmaweb.model.entities.TypeDeRemboursement;
