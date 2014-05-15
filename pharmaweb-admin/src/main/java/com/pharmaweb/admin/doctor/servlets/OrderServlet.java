@@ -1,4 +1,4 @@
-package com.pharmaweb.admin.servlets.orders;
+package com.pharmaweb.admin.doctor.servlets;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pharmaweb.contoller.IOrderBean;
+import com.pharmaweb.controller.IOrderBean;
 /**
  * @author Mnky
  *

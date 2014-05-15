@@ -1,4 +1,4 @@
-package com.pharmaweb.admin.servlets.customerquestions;
+package com.pharmaweb.admin.doctor.servlets;
 
 import java.io.IOException;
 
@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/ContactCustomer")
-public class ContactCustomerServlet extends HttpServlet {
+@WebServlet("/CustomerQuestions")
+public class CustomerQuestionsServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private RequestDispatcher dispatcher;
@@ -23,7 +23,7 @@ public class ContactCustomerServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ContactCustomerServlet() {
+	public CustomerQuestionsServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -33,7 +33,7 @@ public class ContactCustomerServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-		this.dispatcher = this.getServletContext().getRequestDispatcher("/contactcustomer.jsp");
+		this.dispatcher = this.getServletContext().getRequestDispatcher("/customerquestions.jsp");
 		this.dispatcher.forward(request, response);
 	}
 

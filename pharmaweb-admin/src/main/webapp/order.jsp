@@ -91,13 +91,20 @@
 			<c:forEach var="ligneCommande" items="${lignesCommande}">
 				<tr>
 					<td>${ligneCommande.lotProduit.produit.nomProduit}</td>
-					<td>Antalgiques</td>
-					<td>Nom fabriquant</td>
-					<td>0123</td>
-					<td>OUI</td>
-					<td>2,47 €</td>
-					<td>2</td>
-					<td>4,94 €</td>
+					<td>${ligneCommande.lotProduit.produit.classePharmaceutique.libelleClassePharmaceutique}</td>
+					<td>${ligneCommande.lotProduit.produit.nomFabriquantProduit}</td>
+					<td>${ligneCommande.lotProduit.numLotProduit}</td>
+					<td>
+					<c:if test="${ligneCommande.lotProduit.produit.requiereOrdonnanceProduit == 0}"> 
+					<i class="fa fa-check-circle fa-2x"></i>
+					</c:if>
+					<c:if test="${ligneCommande.lotProduit.produit.requiereOrdonnanceProduit == 1}"> 
+					<i class="fa fa-circle fa-2x"></i>
+					</c:if>
+					</td>
+					<td>${ligneCommande.prixUnitaireProduitCommande}</td>
+					<td>${ligneCommande.quantiteCommande}</td>
+					<td>${ligneCommande.prixUnitaireProduitCommande * ligneCommande.quantiteCommande}</td>
 					
 				</tr>	
 			</c:forEach>		
@@ -108,14 +115,18 @@
 			<div class="row">
 			<div class="col-sm-6 col-md-4">
 			    <div class="thumbnail">
-			      <img data-src="holder.js/300x200" alt="...">
+			    <c:forEach var="ligneCommande" items="${lignesCommande}">
+			    <div class="row">
+			      <img data-src="${ligneCommande.lotProduit.produit.imageProduit}" alt="${ligneCommande.lotProduit.produit.nomProduit}">
 			      <div class="caption">
-			        <h3>DAFALGAN CODEINE</h3>
-			        <p>DAFALGAN CODÉINE 500 mg/30 mg : comprimé pelliculé (blanc) ; boîte de 16 </br>
-			       	   Excipient commun : Povidone </br>
-			       	   Sur ordonnance - Remboursable à 65 % - Prix : 2,47 €.</p>
-			        <p><a href="#" class="btn btn-primary" role="button">Notice</a> </p>
+			        <h3>${ligneCommande.lotProduit.produit.nomProduit}</h3>
+			        <p>${ligneCommande.lotProduit.produit.decriptionProduit} </br>
+			       	  Fabriqué par ${ligneCommande.lotProduit.produit.nomFabriquantProduit} </br>
+			       	  ${ligneCommande.lotProduit.produit.classePharmaceutique.libelleClassePharmaceutique}</p>
+			        <p><a href="${ligneCommande.lotProduit.produit.noticeProduit}" class="btn btn-primary" role="button">Notice</a> </p>
+			       </div>
 			      </div>
+			     </c:forEach>
 			    </div>
 			  </div>
 			</div>	
