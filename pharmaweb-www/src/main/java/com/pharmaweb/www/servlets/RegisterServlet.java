@@ -1,6 +1,7 @@
 package com.pharmaweb.www.servlets;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pharmaweb.controller.IClientBean;
 import com.pharmaweb.controller.IStatusBean;
-import com.pharmaweb.controller.bean.ClientBean;
+import com.pharmaweb.model.entities.Adresse;
 import com.pharmaweb.model.entities.Client;
 import com.pharmaweb.model.entities.Statut;
 
@@ -60,9 +61,20 @@ public class RegisterServlet extends HttpServlet {
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
 		String email = request.getParameter("email");
+		String telephone = request.getParameter("telephone");
 		String password = request.getParameter("password");
+		String adresse1 = request.getParameter("adresse");
+		String adresse2 = request.getParameter("adresse2");
+		String codePostal = request.getParameter("codePostal");
+		String ville = request.getParameter("ville");
 		
 		Statut statut = this.statusBean.getById(idStatut);
+		
+		Adresse adresse = new Adresse();
+		adresse.setAdresseAdresse(adresse1);
+		adresse.setComplementAdresse(adresse2);
+		adresse.setCodePostalAdresse(new BigDecimal(codePostal));
+		adresse.setVilleAdresse(ville);
 		
 		Client client = new Client();
 		client.setPrenomClient(prenom);
@@ -70,6 +82,9 @@ public class RegisterServlet extends HttpServlet {
 		client.setMailClient(email);
 		client.setMdpClient(password);
 		client.setStatut(statut);
+		client.setNumeroTelClient(telephone);
+		client.setAdresse(adresse);
+		
 		
 		int idClient = this.clientBean.add(client);
 		

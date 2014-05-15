@@ -3,6 +3,7 @@ package com.pharmaweb.model;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import com.pharmaweb.model.entities.ClassePharmaceutique;
 import com.pharmaweb.model.entities.Produit;
@@ -72,5 +73,14 @@ public class MedicineDAO extends DAO {
 
 	public void update(Produit produit) {
 		entityManager.merge(produit);
+	}
+
+
+	public List<Produit> search(String pattern) {
+		Query query = entityManager.createQuery("SELECT p FROM Produit p WHERE lower(p.nomProduit) LIKE lower(:name) OR lower(p.decriptionProduit) LIKE lower(:desc)");
+		query.setParameter("name", "%"+pattern+"%");
+		query.setParameter("desc", "%"+pattern+"%");
+		
+		return query.getResultList();
 	}
 }

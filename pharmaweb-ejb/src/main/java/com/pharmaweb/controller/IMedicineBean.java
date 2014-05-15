@@ -29,4 +29,6 @@ public interface IMedicineBean {
 	
 	List<TypeDeRemboursement> getTypesRemboursement();
 	TypeDeRemboursement getTypeRemboursementById(int idTypeRemboursement);
+	
+	List<Produit> search(String pattern);
 }

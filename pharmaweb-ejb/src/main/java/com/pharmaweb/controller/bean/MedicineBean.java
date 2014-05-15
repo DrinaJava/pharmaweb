@@ -75,4 +75,9 @@ public class MedicineBean extends Bean implements IMedicineBean {
 	public void update(Produit produit) {
 		this.medicineDAO.update(produit);
 	}
+
+	@Override
+	public List<Produit> search(String pattern) {
+		return this.medicineDAO.search(pattern);
+	}
 }
