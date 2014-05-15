@@ -1,7 +1,9 @@
 package com.pharmaweb.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +20,8 @@ public class Client implements Serializable {
 
 	@Id
 	@Column(name="ID_CLIENT")
+	@SequenceGenerator(name="AutoInc",sequenceName="SEQ_CLIENT", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="AutoInc")
 	private long idClient;
 
 	@Lob

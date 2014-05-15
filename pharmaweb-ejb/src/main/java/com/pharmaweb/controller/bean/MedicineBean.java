@@ -76,11 +76,17 @@ public class MedicineBean extends Bean implements IMedicineBean {
 		this.medicineDAO.update(produit);
 	}
 
+
 	/* (non-Javadoc)
 	 * @see com.pharmaweb.controller.IMedicineBean#getSubFamilies()
 	 */
 	@Override
 	public List<ClassePharmaceutique> getSubFamilies(final int idClasse) {
 		return this.medicineDAO.getSubFamilies(idClasse);
+	}
+	@Override
+	public List<Produit> search(final String pattern) {
+		return this.medicineDAO.search(pattern);
+
 	}
 }

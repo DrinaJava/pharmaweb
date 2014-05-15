@@ -15,14 +15,14 @@
 	<div id="wrap">
 		<div id="account">
 				<div class="contentWrapper">
-				<a href="#">CONNEXION</a> <a href="#"><i class="fa fa-shopping-cart"></i> MON PANIER</a>  
+				<a href="Connexion">CONNEXION</a> <a href="#"><i class="fa fa-shopping-cart"></i> MON PANIER</a>  
 				</div>
 		</div>
 		<header id="full">
 			<div class="contentWrapper">
-			<a class="logo" href="/index.php"></a>
+			<a class="logo" href="Home">Pharmaweb</a>
 			<div class="headersearch">
-				<form action="" class="search" method="get" name="search">
+				<form action="Recherche" class="search" method="get" name="search">
 					<label for="s" class="search-label"><span class="fa-search"></span></label>
 					<input id="s" name="search" placeholder="Rechercher ..."
 						type="text" />
@@ -31,7 +31,7 @@
 			</div>
 			<nav>
 				<div class="contentWrapper">
-					<a class="book" href="/creations">PHARMACIE</a> <a href="/galerie">PARAPHARMACIE</a>
+					<a class="book" href="#">PHARMACIE</a> <a href="#">PARAPHARMACIE</a>
 				</div>
 			</nav>
 

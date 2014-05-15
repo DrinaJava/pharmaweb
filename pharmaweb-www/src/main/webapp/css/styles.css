@@ -7,13 +7,11 @@ body {
 	background-attachment: fixed;
 	margin: 0;
 }
-a{
-	text-decoration: none;
-}
-a:hover{
+a, a:hover ,a:active, a:focus{
 	text-decoration: none;
 	color: inherit;
 }
+
 html,body,#wrap {
 	height: 100%;
 }
@@ -81,6 +79,9 @@ header#full a.logo {
 	width: 459px;
 	height: 160px;
 	float: left;
+	font-size: 72px;
+	text-align: left;
+	padding-left: 50px;
 }
 
 header#full .headersearch {
@@ -208,6 +209,10 @@ section {
 	width: 950px;
 	margin: 30px auto;
 	padding: 25px;
+}
+
+section a:hover{
+	color:#004C00;
 }
 
 /*    Footer       */

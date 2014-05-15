@@ -20,7 +20,33 @@
 			<label for="prenom">Prénom</label> 
 			<input type="text" class="form-control" id="prenom" name="prenom">
 		</div>
-
+		<div class="form-group">
+			<label for="telephone">Téléphone</label> 
+			<input type="text" class="form-control" id="telephone" name="telephone">
+		</div>
+		
+		
+		<div class="form-group">
+			<label for="adresse">Adresse</label> 
+			<input type="text" class="form-control" id="adresse" name="adresse">
+		</div>
+		
+		<div class="form-group">
+			<label for="adresse">Complément d'adresse</label> 
+			<textarea class="form-control" id="adresse2" name="adresse2"></textarea>
+		</div>
+		
+		<div class="form-group">
+			<label for="codePostal">Code Posal</label> 
+			<input type="text" class="form-control" id="codePostal" name="codePostal">
+		</div>
+		
+		<div class="form-group">
+			<label for="ville">Ville</label> 
+			<input type="text" class="form-control" id="ville" name="ville">
+		</div>
+		
+		
 		<div class="form-group">
 			<label for="email">Adresse email</label> 
 			<input type="email" class="form-control" id="email" name="email">
