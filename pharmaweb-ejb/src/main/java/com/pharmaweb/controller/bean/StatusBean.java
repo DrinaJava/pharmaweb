@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
 import com.pharmaweb.controller.IStatusBean;
+import com.pharmaweb.model.StatusDAO;
 import com.pharmaweb.model.entities.Statut;
 
 /**

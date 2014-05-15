@@ -17,60 +17,70 @@ import com.pharmaweb.model.entities.TypeDeRemboursement;
 @SuppressWarnings("unchecked")
 public class MedicineDAO extends DAO {
 
-	public MedicineDAO(EntityManager entityManager) {
+	public MedicineDAO(final EntityManager entityManager) {
 		super(entityManager);
 	}
-	
-	
+
+
 	public List<Produit> getAll(){
-		return entityManager.createNamedQuery("Produit.findAll").getResultList();
+		return this.entityManager.createNamedQuery("Produit.findAll").getResultList();
 	}
 
 	public List<ClassePharmaceutique> getFamilies(){
-		return entityManager.createNamedQuery("ClassePharmaceutique.findAll").getResultList();
+		return this.entityManager.createNamedQuery("ClassePharmaceutique.findAll").getResultList();
 	}
-	
-	public ClassePharmaceutique getFamilyById(int id){
-		String sql = "SELECT c FROM ClassePharmaceutique c WHERE c.idClassePharmaceutique = " + String.valueOf(id);
-		return (ClassePharmaceutique) entityManager.createQuery(sql).getSingleResult();
+	public List<ClassePharmaceutique> getSubFamilies(final int idClasse) {
+		final String sql ="SELECT c.classePharmaceutiques FROM ClassePharmaceutique c WHERE c.idClassePharmaceutique = " + String.valueOf(idClasse);
+		return this.entityManager.createQuery(sql).getResultList();
 	}
-	
-	public int add(Produit produit) {
-		entityManager.persist(produit);
-		entityManager.flush();
+
+	public ClassePharmaceutique getFamilyById(final int id){
+		final String sql = "SELECT c FROM ClassePharmaceutique c WHERE c.idClassePharmaceutique = " + String.valueOf(id);
+		return (ClassePharmaceutique) this.entityManager.createQuery(sql).getSingleResult();
+	}
+
+	public int add(final Produit produit) {
+		this.entityManager.persist(produit);
+		this.entityManager.flush();
 		return (int) produit.getIdProduit();
 	}
 
 
 	public List<Tva> getAllTva() {
-		return entityManager.createNamedQuery("Tva.findAll").getResultList();
+		return this.entityManager.createNamedQuery("Tva.findAll").getResultList();
 	}
 
 
-	public Tva getTvaById(int idTva) {
-		String sql = "SELECT t FROM Tva t WHERE t.idTva = " + String.valueOf(idTva);
-		return (Tva) entityManager.createQuery(sql).getSingleResult();
+	public Tva getTvaById(final int idTva) {
+		final String sql = "SELECT t FROM Tva t WHERE t.idTva = " + String.valueOf(idTva);
+		return (Tva) this.entityManager.createQuery(sql).getSingleResult();
 	}
 
 
 	public List<TypeDeRemboursement> getTypesRemboursement() {
-		return entityManager.createNamedQuery("TypeDeRemboursement.findAll").getResultList();
+		return this.entityManager.createNamedQuery("TypeDeRemboursement.findAll").getResultList();
 	}
 
 
-	public TypeDeRemboursement getTypeRemboursementById(int idTypeRemboursement) {
-		String sql = "SELECT tr FROM TypeDeRemboursement tr WHERE tr.idTypeDeRemboursement = " + String.valueOf(idTypeRemboursement);
-		return (TypeDeRemboursement) entityManager.createQuery(sql).getSingleResult();
+	public TypeDeRemboursement getTypeRemboursementById(final int idTypeRemboursement) {
+		final String sql = "SELECT tr FROM TypeDeRemboursement tr WHERE tr.idTypeDeRemboursement = " + String.valueOf(idTypeRemboursement);
+		return (TypeDeRemboursement) this.entityManager.createQuery(sql).getSingleResult();
 	}
 
 
-	public Produit getByID(int idProduit) {
-		String sql = "SELECT p FROM Produit p WHERE p.idProduit = " + String.valueOf(idProduit);
-		return (Produit) entityManager.createQuery(sql).getSingleResult();
+	public Produit getByID(final int idProduit) {
+		final String sql = "SELECT p FROM Produit p WHERE p.idProduit = " + String.valueOf(idProduit);
+		return (Produit) this.entityManager.createQuery(sql).getSingleResult();
 	}
 
 
-	public void update(Produit produit) {
-		entityManager.merge(produit);
+	public void update(final Produit produit) {
+		this.entityManager.merge(produit);
 	}
+
+
+	/**
+	 * @return
+	 */
+
 }

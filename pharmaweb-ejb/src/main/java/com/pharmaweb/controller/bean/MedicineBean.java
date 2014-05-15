@@ -20,10 +20,10 @@ import com.pharmaweb.model.entities.TypeDeRemboursement;
 public class MedicineBean extends Bean implements IMedicineBean {
 
 	private MedicineDAO medicineDAO;
-	
+
 	@PostConstruct
 	protected void init(){
-		this.medicineDAO = new MedicineDAO(em);
+		this.medicineDAO = new MedicineDAO(this.em);
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class MedicineBean extends Bean implements IMedicineBean {
 	}
 
 	@Override
-	public int add(Produit produit) {
+	public int add(final Produit produit) {
 		return this.medicineDAO.add(produit);
 	}
 
@@ -42,7 +42,7 @@ public class MedicineBean extends Bean implements IMedicineBean {
 	}
 
 	@Override
-	public ClassePharmaceutique getFamilyById(int id) {
+	public ClassePharmaceutique getFamilyById(final int id) {
 		return this.medicineDAO.getFamilyById(id);
 	}
 
@@ -52,7 +52,7 @@ public class MedicineBean extends Bean implements IMedicineBean {
 	}
 
 	@Override
-	public Tva getTvaById(int idTva) {
+	public Tva getTvaById(final int idTva) {
 		return this.medicineDAO.getTvaById(idTva);
 	}
 
@@ -62,17 +62,25 @@ public class MedicineBean extends Bean implements IMedicineBean {
 	}
 
 	@Override
-	public TypeDeRemboursement getTypeRemboursementById(int idTypeRemboursement) {
+	public TypeDeRemboursement getTypeRemboursementById(final int idTypeRemboursement) {
 		return this.medicineDAO.getTypeRemboursementById(idTypeRemboursement) ;
 	}
 
 	@Override
-	public Produit getByID(int idProduit) {
+	public Produit getByID(final int idProduit) {
 		return this.medicineDAO.getByID(idProduit);
 	}
 
 	@Override
-	public void update(Produit produit) {
+	public void update(final Produit produit) {
 		this.medicineDAO.update(produit);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.pharmaweb.controller.IMedicineBean#getSubFamilies()
+	 */
+	@Override
+	public List<ClassePharmaceutique> getSubFamilies(final int idClasse) {
+		return this.medicineDAO.getSubFamilies(idClasse);
 	}
 }

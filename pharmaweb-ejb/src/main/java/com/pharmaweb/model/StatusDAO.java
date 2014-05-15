@@ -1,10 +1,9 @@
-package com.pharmaweb.controller.bean;
+package com.pharmaweb.model;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import com.pharmaweb.model.DAO;
 import com.pharmaweb.model.entities.Statut;
 
 /**

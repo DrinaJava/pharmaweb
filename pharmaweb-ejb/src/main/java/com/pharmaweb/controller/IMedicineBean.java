@@ -20,13 +20,14 @@ public interface IMedicineBean {
 	Produit getByID(int idProduit);
 	void update(Produit produit);
 	int add(Produit produit);
-	
+
 	List<ClassePharmaceutique> getFamilies();
+	List<ClassePharmaceutique> getSubFamilies(int idClasse);
 	ClassePharmaceutique getFamilyById(int idFamily);
-	
+
 	List<Tva> getAllTva();
 	Tva getTvaById(int idTva);
-	
+
 	List<TypeDeRemboursement> getTypesRemboursement();
 	TypeDeRemboursement getTypeRemboursementById(int idTypeRemboursement);
 }
