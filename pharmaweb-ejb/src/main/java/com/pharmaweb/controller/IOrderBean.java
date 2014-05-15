@@ -1,4 +1,4 @@
-package com.pharmaweb.contoller;
+package com.pharmaweb.controller;
 
 import java.util.List;
 
@@ -6,7 +6,10 @@ import javax.ejb.Remote;
 
 import com.pharmaweb.model.entities.CommandeClient;
 import com.pharmaweb.model.entities.CommandeLotProduit;
-
+/**
+ * @author Mnky
+ *
+ */
 @Remote
 public interface IOrderBean {
 

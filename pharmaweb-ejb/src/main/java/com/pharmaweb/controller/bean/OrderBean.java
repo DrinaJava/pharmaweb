@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
-import com.pharmaweb.contoller.IOrderBean;
+import com.pharmaweb.controller.IOrderBean;
 import com.pharmaweb.model.OrderDAO;
 import com.pharmaweb.model.entities.CommandeClient;
 import com.pharmaweb.model.entities.CommandeLotProduit;

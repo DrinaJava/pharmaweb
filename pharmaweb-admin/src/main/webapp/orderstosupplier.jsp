@@ -8,7 +8,7 @@
 <script src="js/medicines.js" type="text/javascript"></script>
 
 <section>
-	<h1>Commandes en cours</h1>
+	<h1>Commandes des pharmacies</h1>
 	
 
 	<div class="panel panel-default">
@@ -19,22 +19,22 @@
 					<tr>
 						
 						<th>N° de commande</th>
-						<th>Client</th>
-						<th>M&eacute;decin traitant</th>
+						<th>Pharmacie</th>
+						<th><i class="fa fa-phone fa-2x"></i></th>
 						<th>Date</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 				
-				<c:forEach var="commande" items="${commandes}">
+				<c:forEach var="commande" items="${commandesFournisseur}">
 					<tr>
 						
-						<td>${commande.numCommandeClient}</td>
-						<td><a href="Client?infos">${commande.client.nomClient}</a></td>
-						<td>${commande.client.medecin.nomMedecin}</td>
-						<td>${commande.client.dateNaissanceClient}</td>
-						<td class="orderinfo"><a href="Order?info=${commande.idCommandeClient}"><i
+						<td>${commande.numCommandeFournisseur}</td>
+						<td>${commande.pharmacie.nomPharmacie}</td>
+						<td>${commande.pharmacie.telephonePharmacie}</td>
+						<td>${commande.dateCommandeFournisseur}</td>
+						<td class="orderToSupplierInfo"><a href="OrderToSupplier?info=${commande.idCommandeFournisseur}"><i
 								class="fa fa-search-plus fa-2x"></i></a></td>
 					</tr>
 				</c:forEach>
