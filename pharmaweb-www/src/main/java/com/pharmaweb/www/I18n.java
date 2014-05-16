@@ -7,6 +7,8 @@ import org.ini4j.Ini;
 
 public class I18n {
 	
+	
+
 	public static String INVALID_LOGIN = "login.invalid";
 	
 	public static String MEDICINE_CREATE_SUCCESS = "medicine.create.success";
@@ -16,6 +18,7 @@ public class I18n {
 	public static String MEDICINE_DELETE_SUCCESS = "medicine.delete.success";
 	public static String MEDICINE_DELETE_ERROR = "medicine.delete.error";
 	
+	public static String CART_ADD = "cart.add";
 	
 	public static String _(String key){
 		

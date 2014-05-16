@@ -10,25 +10,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pharmaweb.controller.IClientBean;
-import com.pharmaweb.www.I18n;
+import com.pharmaweb.controller.IMedicineBean;
+import com.pharmaweb.www.Cart;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class CartServlet
  */
-@WebServlet(name = "Connexion", urlPatterns = { "/Connexion" })
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "Panier", urlPatterns = { "/Panier" })
+public class CartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private RequestDispatcher dispatcher;
-      
+	private RequestDispatcher dispatcher;   
 	
 	@EJB
-	private IClientBean clientBean;
+	private IMedicineBean medicineBean;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public CartServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,9 +37,25 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		Cart cart = (Cart) request.getSession().getAttribute("cart");
 		
+		if(cart == null){
+			cart = new Cart(medicineBean);
+		}		
 		
-		this.dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+		if(request.getParameter("del") != null){
+			int idProduit = Integer.parseInt(request.getParameter("del"));
+			cart.delete(idProduit);
+		}
+		if(request.getParameter("add") != null){
+			int idProduit = Integer.parseInt(request.getParameter("add"));
+			cart.add(idProduit);
+		}
+
+		request.getSession().setAttribute("cart",cart);
+		request.setAttribute("panier",cart.getLines());
+
+		this.dispatcher = this.getServletContext().getRequestDispatcher("/cart.jsp");
 		this.dispatcher.forward(request, response);
 	}
 
@@ -48,20 +63,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		
-		int idClient = this.clientBean.login(username, password);
-		
-		if(idClient == -1){
-			request.setAttribute("message", new Message("","danger",I18n._(I18n.INVALID_LOGIN)));
-			this.dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
-			this.dispatcher.forward(request, response);			
-		}else{
-			request.getSession().setAttribute("idClient",idClient);
-			response.sendRedirect("Compte");
-		}
+		// TODO Auto-generated method stub
 	}
+
 }

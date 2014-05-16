@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <!DOCTYPE html">
 <html>
 <head>
@@ -15,7 +18,14 @@
 	<div id="wrap">
 		<div id="account">
 				<div class="contentWrapper">
-				<a href="Connexion">CONNEXION</a> <a href="#"><i class="fa fa-shopping-cart"></i> MON PANIER</a>  
+				
+				<c:if test="${sessionScope.idClient != null}">
+						<a href="Compte">MON COMPTE</a> 			
+				</c:if>
+				<c:if test="${sessionScope.idClient == null}">
+						<a href="Connexion">CONNEXION</a>			
+				</c:if>				
+				 <a href="Panier"><i class="fa fa-shopping-cart"></i> MON PANIER</a>  
 				</div>
 		</div>
 		<header id="full">
@@ -31,7 +41,7 @@
 			</div>
 			<nav>
 				<div class="contentWrapper">
-					<a class="book" href="#">PHARMACIE</a> <a href="#">PARAPHARMACIE</a>
+					<a class="book" href="Catalog">PHARMACIE</a> <a href="Catalog">PARAPHARMACIE</a>
 				</div>
 			</nav>
 

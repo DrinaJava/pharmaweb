@@ -12,4 +12,5 @@ public interface IClientBean {
 	Client getById(int idClient);
 	int add(Client client);
 	void update(Client client);
+	int login(String mail, String password);
 }

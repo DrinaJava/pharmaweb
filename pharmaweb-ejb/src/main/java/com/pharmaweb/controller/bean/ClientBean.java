@@ -43,4 +43,9 @@ public class ClientBean extends Bean implements IClientBean {
 		clientDAO.update(client);
 	}
 
+	@Override
+	public int login(String mail, String password) {
+		return clientDAO.login(mail, password);
+	}
+
 }
