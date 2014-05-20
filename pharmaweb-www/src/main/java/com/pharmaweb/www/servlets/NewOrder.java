@@ -26,6 +26,7 @@ import com.pharmaweb.model.entities.Pharmacie;
 import com.pharmaweb.model.entities.PharmacieStock;
 import com.pharmaweb.www.Cart;
 import com.pharmaweb.www.CartLine;
+import com.pharmaweb.www.I18n;
 
 /**
  * Servlet implementation class NewOrder
@@ -72,7 +73,8 @@ public class NewOrder extends HttpServlet {
 			commande.setClient(client);
 			commande.setAdresse(client.getAdresse());
 			commande.setPharmacie(pharmacie);
-		
+			commande.setStatutCommandeClient(I18n._(I18n.WAITING));
+			
 			int idOrder = orderBean.create(commande);
 			commande = orderBean.getOrderById(idOrder);
 			

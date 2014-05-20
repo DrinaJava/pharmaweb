@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pharmaweb.controller.IMedicineBean;
+import com.pharmaweb.model.entities.LotProduit;
 import com.pharmaweb.www.Cart;
 
 /**
@@ -53,6 +54,7 @@ public class CartServlet extends HttpServlet {
 		}
 
 		request.getSession().setAttribute("cart",cart);
+		request.getSession().setAttribute("totalht",cart.getTotalHT());
 		request.setAttribute("panier",cart.getLines());
 
 		this.dispatcher = this.getServletContext().getRequestDispatcher("/cart.jsp");
@@ -63,7 +65,7 @@ public class CartServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }
+
