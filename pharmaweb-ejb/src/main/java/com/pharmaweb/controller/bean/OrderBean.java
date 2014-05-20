@@ -45,4 +45,13 @@ public class OrderBean extends Bean implements IOrderBean {
 		return this.orderDAO.getOrderLines(idOrder);
 	}
 
+	@Override
+	public int create(CommandeClient commandeClient) {
+		return this.orderDAO.create(commandeClient);
+	}
+
+	@Override
+	public void update(CommandeClient commandeClient) {
+		// TODO Auto-generated method stub
+	}
 }

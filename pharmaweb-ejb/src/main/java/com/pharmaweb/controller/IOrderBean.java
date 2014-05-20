@@ -13,9 +13,10 @@ import com.pharmaweb.model.entities.CommandeLotProduit;
 @Remote
 public interface IOrderBean {
 
-	public List<CommandeClient> getAll();
-	public CommandeClient getOrderById(int id);
-	public List<CommandeLotProduit> getOrderLines(int idOrder);
-
+	List<CommandeClient> getAll();
+	CommandeClient getOrderById(int id);
+	List<CommandeLotProduit> getOrderLines(int idOrder);
+	int create(CommandeClient commandeClient);
+	void update(CommandeClient commandeClient);
 }
 

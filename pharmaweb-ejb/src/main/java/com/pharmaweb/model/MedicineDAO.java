@@ -1,11 +1,15 @@
 package com.pharmaweb.model;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.pharmaweb.model.entities.ClassePharmaceutique;
+import com.pharmaweb.model.entities.LotProduit;
+import com.pharmaweb.model.entities.PharmacieStock;
 import com.pharmaweb.model.entities.Produit;
 import com.pharmaweb.model.entities.Tva;
 import com.pharmaweb.model.entities.TypeDeRemboursement;
@@ -89,4 +93,58 @@ public class MedicineDAO extends DAO {
 		return query.getResultList();
 	}
 
+
+	public LotProduit getLotById(int idLot) {
+		final String sql = "SELECT l FROM LotProduit l WHERE l.idLotProduit = " + String.valueOf(idLot);
+		return (LotProduit) this.entityManager.createQuery(sql).getSingleResult();
+	}
+
+
+	public PharmacieStock getPharmacieStockByLot(int idLot) {
+		final String sql = "SELECT l FROM PharmacieStock l WHERE l.id.idLotProduit = " + String.valueOf(idLot);
+		return (PharmacieStock) this.entityManager.createQuery(sql).getSingleResult();
+	}
+
+
+	public List<Produit> getPharmacieStockByPharmacie(int idPharmacie) {
+		
+		List<Produit> produits = new ArrayList<Produit>();
+		
+		Query query = entityManager.createNativeQuery("SELECT DISTINCT(PRODUIT.ID_PRODUIT)  FROM PRODUIT "+
+	      "INNER JOIN LOT_PRODUIT ON PRODUIT.ID_PRODUIT = LOT_PRODUIT.ID_PRODUIT "+
+	      "INNER JOIN A_EN_STOCK ON LOT_PRODUIT.ID_LOT_PRODUIT = A_EN_STOCK.ID_LOT_PRODUIT "+
+	      "WHERE A_EN_STOCK.ID_PHARMACIE=1 AND PRODUIT.VISIBLE_PRODUIT=1 ");
+		
+		query.setParameter(1, idPharmacie);
+		
+		List<BigDecimal> results = query.getResultList();
+		
+		
+		for (BigDecimal idProduit : results) {
+			Produit produit = this.getByID(idProduit.intValue());
+			produits.add(produit);
+		}
+
+		return produits;
+	}
+
+
+	public LotProduit getLotFromProduct(long idProduit, long idPharmacie,
+			int quantite) {
+		String sql = "SELECT LOT_PRODUIT.ID_LOT_PRODUIT FROM LOT_PRODUIT "+
+				"INNER JOIN A_EN_STOCK "+
+				"ON LOT_PRODUIT.ID_LOT_PRODUIT = A_EN_STOCK.ID_LOT_PRODUIT "+
+				"WHERE LOT_PRODUIT.ID_PRODUIT=? AND A_EN_STOCK.ID_PHARMACIE=?";
+		
+		Query query = entityManager.createNativeQuery(sql);
+		query.setParameter(1, idProduit);
+		query.setParameter(2, 1);
+		
+		List<Object> results = query.getResultList();
+		
+		int idLot = ((BigDecimal) results.get(0)).intValue();
+		
+		return this.getLotById(idLot);
+	}
 }
+

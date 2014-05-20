@@ -20,8 +20,8 @@ public class Client implements Serializable {
 
 	@Id
 	@Column(name="ID_CLIENT")
-	@SequenceGenerator(name="AutoInc",sequenceName="SEQ_CLIENT", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="AutoInc")
+	@SequenceGenerator(name="IncClient",sequenceName="SEQ_CLIENT", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IncClient")
 	private long idClient;
 
 	@Lob

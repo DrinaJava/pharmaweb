@@ -27,6 +27,10 @@
 			</c:forEach>		
 			</tbody>
 		</table>
+		
+		<div class="text-right">
+			 <a href="Commander?etape=livraison" class="btn btn-success">Continuer ma commande</a>
+		</div>
 </section>	
 	
 <jsp:include page="includes/footer.jsp"/>

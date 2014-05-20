@@ -8,6 +8,8 @@ import javax.ejb.Stateless;
 import com.pharmaweb.controller.IMedicineBean;
 import com.pharmaweb.model.MedicineDAO;
 import com.pharmaweb.model.entities.ClassePharmaceutique;
+import com.pharmaweb.model.entities.LotProduit;
+import com.pharmaweb.model.entities.PharmacieStock;
 import com.pharmaweb.model.entities.Produit;
 import com.pharmaweb.model.entities.Tva;
 import com.pharmaweb.model.entities.TypeDeRemboursement;
@@ -87,6 +89,28 @@ public class MedicineBean extends Bean implements IMedicineBean {
 	@Override
 	public List<Produit> search(final String pattern) {
 		return this.medicineDAO.search(pattern);
-
 	}
+
+	@Override
+	public LotProduit getLotById(int idLot) {
+		return this.medicineDAO.getLotById(idLot);
+	}
+
+	@Override
+	public PharmacieStock getPharmacieStockByLot(int idLot) {
+		return this.medicineDAO.getPharmacieStockByLot(idLot);
+	}
+	
+	@Override
+	public List<Produit> getPharmacieStockByPharmacie(int idPharmacie){
+		return this.medicineDAO.getPharmacieStockByPharmacie(idPharmacie);
+	}
+
+	@Override
+	public LotProduit getLotFromProduct(long idProduit, long idPharmacie,
+			int quantite) {
+		return this.medicineDAO.getLotFromProduct(idProduit, idPharmacie,
+			quantite);
+	}
+
 }

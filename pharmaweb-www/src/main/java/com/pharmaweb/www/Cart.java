@@ -3,8 +3,6 @@ package com.pharmaweb.www;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Stateful;
-
 import com.pharmaweb.controller.IMedicineBean;
 import com.pharmaweb.www.CartLine;
 

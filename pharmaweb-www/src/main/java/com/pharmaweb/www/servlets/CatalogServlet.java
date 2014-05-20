@@ -1,9 +1,6 @@
 package com.pharmaweb.www.servlets;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -16,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.pharmaweb.controller.IMedicineBean;
 import com.pharmaweb.www.Cart;
 import com.pharmaweb.www.I18n;
+import com.pharmaweb.www.LoginCookieHandler;
+import com.pharmaweb.www.Message;
 
 /**
  * Servlet implementation class MedicineServlet
@@ -43,6 +42,8 @@ public class CatalogServlet extends HttpServlet {
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
+		LoginCookieHandler.login(request);
+		
 		if(request.getParameter("cartadd") != null){
 			int idProduit = Integer.parseInt(request.getParameter("cartadd"));
 					
@@ -51,7 +52,7 @@ public class CatalogServlet extends HttpServlet {
 			request.setAttribute("message", new Message("","success",I18n._(I18n.CART_ADD)));
 		}
 		
-		request.setAttribute("produits", this.medicineBean.getAll());
+		request.setAttribute("produits", this.medicineBean.getPharmacieStockByPharmacie(1));
 		request.setAttribute("categories", this.medicineBean.getFamilies());
 
 		this.dispatcher = this.getServletContext().getRequestDispatcher("/catalog.jsp");

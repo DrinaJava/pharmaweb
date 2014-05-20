@@ -42,4 +42,10 @@ public class OrderDAO extends DAO{
 	}
 
 
+	public int create(CommandeClient commandeClient) {
+		this.entityManager.persist(commandeClient);
+		this.entityManager.flush();
+		
+		return (int) commandeClient.getIdCommandeClient()-1;
+	}
 }

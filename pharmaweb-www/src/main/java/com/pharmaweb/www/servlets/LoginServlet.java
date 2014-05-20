@@ -6,12 +6,14 @@ import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pharmaweb.controller.IClientBean;
 import com.pharmaweb.www.I18n;
+import com.pharmaweb.www.Message;
 
 /**
  * Servlet implementation class LoginServlet
@@ -39,7 +41,6 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		
 		this.dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
 		this.dispatcher.forward(request, response);
 	}
@@ -56,10 +57,15 @@ public class LoginServlet extends HttpServlet {
 		int idClient = this.clientBean.login(username, password);
 		
 		if(idClient == -1){
+			
 			request.setAttribute("message", new Message("","danger",I18n._(I18n.INVALID_LOGIN)));
 			this.dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
 			this.dispatcher.forward(request, response);			
 		}else{
+			Cookie cookie = new Cookie("idClient", String.valueOf(idClient));
+			cookie.setMaxAge(3600);
+			
+			response.addCookie(cookie);
 			request.getSession().setAttribute("idClient",idClient);
 			response.sendRedirect("Compte");
 		}

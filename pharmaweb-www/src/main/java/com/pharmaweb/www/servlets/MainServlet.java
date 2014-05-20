@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pharmaweb.www.LoginCookieHandler;
+
 /**
  * Servlet implementation class MainServlet
  * @author Anthony DENAUD
@@ -31,6 +33,9 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		LoginCookieHandler.login(request);
+		
 		this.dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
 		this.dispatcher.forward(request, response);
 	}
@@ -40,7 +45,5 @@ public class MainServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
 	}
-
 }

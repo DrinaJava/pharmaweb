@@ -1,7 +1,9 @@
 package com.pharmaweb.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class CommandeClient implements Serializable {
 
 	@Id
 	@Column(name="ID_COMMANDE_CLIENT")
+	@SequenceGenerator(name="IncCommandeClient",sequenceName="SEQ_COMMANDE_CLIENT", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IncCommandeClient")
 	private long idCommandeClient;
 
 	@Temporal(TemporalType.DATE)
@@ -61,7 +65,7 @@ public class CommandeClient implements Serializable {
 	private List<Discussion> discussions;
 
 	//bi-directional many-to-one association to CommandeLotProduit
-	@OneToMany(mappedBy="commandeClient")
+	@OneToMany(mappedBy="commandeClient", cascade=CascadeType.PERSIST)
 	private List<CommandeLotProduit> estDansLaCommandeClients;
 
 	public CommandeClient() {

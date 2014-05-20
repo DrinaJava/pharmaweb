@@ -1,4 +1,4 @@
-package com.pharmaweb.www.servlets;
+package com.pharmaweb.www;
 
 /**
  * 
