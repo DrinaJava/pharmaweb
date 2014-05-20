@@ -1,9 +1,8 @@
 package com.pharmaweb.model.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -28,9 +27,21 @@ public class CommandeClient implements Serializable {
 	@Column(name="DATE_COMMANDE_CLIENT")
 	private Date dateCommandeClient;
 
+	@Column(name="EST_PAYE_COMMANDE_CLIENT")
+	private BigDecimal estPayeCommandeClient;
+
+	@Column(name="EST_PAYE_MUTU_COMMANDE_CLIENT")
+	private BigDecimal estPayeMutuCommandeClient;
+
+	@Column(name="EST_PAYE_SECU_COMMANDE_CLIENT")
+	private BigDecimal estPayeSecuCommandeClient;
+
 	@Lob
 	@Column(name="NUM_COMMANDE_CLIENT")
 	private String numCommandeClient;
+
+	@Column(name="STATUT_COMMANDE_CLIENT")
+	private String statutCommandeClient;
 
 	//bi-directional many-to-one association to Adresse
 	@ManyToOne
@@ -65,7 +76,7 @@ public class CommandeClient implements Serializable {
 	private List<Discussion> discussions;
 
 	//bi-directional many-to-one association to CommandeLotProduit
-	@OneToMany(mappedBy="commandeClient", cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy="commandeClient")
 	private List<CommandeLotProduit> estDansLaCommandeClients;
 
 	public CommandeClient() {
@@ -87,12 +98,44 @@ public class CommandeClient implements Serializable {
 		this.dateCommandeClient = dateCommandeClient;
 	}
 
+	public BigDecimal getEstPayeCommandeClient() {
+		return this.estPayeCommandeClient;
+	}
+
+	public void setEstPayeCommandeClient(BigDecimal estPayeCommandeClient) {
+		this.estPayeCommandeClient = estPayeCommandeClient;
+	}
+
+	public BigDecimal getEstPayeMutuCommandeClient() {
+		return this.estPayeMutuCommandeClient;
+	}
+
+	public void setEstPayeMutuCommandeClient(BigDecimal estPayeMutuCommandeClient) {
+		this.estPayeMutuCommandeClient = estPayeMutuCommandeClient;
+	}
+
+	public BigDecimal getEstPayeSecuCommandeClient() {
+		return this.estPayeSecuCommandeClient;
+	}
+
+	public void setEstPayeSecuCommandeClient(BigDecimal estPayeSecuCommandeClient) {
+		this.estPayeSecuCommandeClient = estPayeSecuCommandeClient;
+	}
+
 	public String getNumCommandeClient() {
 		return this.numCommandeClient;
 	}
 
 	public void setNumCommandeClient(String numCommandeClient) {
 		this.numCommandeClient = numCommandeClient;
+	}
+
+	public String getStatutCommandeClient() {
+		return this.statutCommandeClient;
+	}
+
+	public void setStatutCommandeClient(String statutCommandeClient) {
+		this.statutCommandeClient = statutCommandeClient;
 	}
 
 	public Adresse getAdresse() {

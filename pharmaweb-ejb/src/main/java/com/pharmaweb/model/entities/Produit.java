@@ -5,76 +5,84 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+
 /**
  * The persistent class for the PRODUIT database table.
  * 
  */
-
 @Entity
-@NamedQuery(name = "Produit.findAll", query = "SELECT p FROM Produit p")
+@NamedQuery(name="Produit.findAll", query="SELECT p FROM Produit p")
 public class Produit implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "ID_PRODUIT")
+	@Column(name="ID_PRODUIT")
 	private long idProduit;
 
 	@Lob
-	@Column(name = "DECRIPTION_PRODUIT")
+	@Column(name="DECRIPTION_PRODUIT")
 	private String decriptionProduit;
 
 	@Lob
-	@Column(name = "IMAGE_PRODUIT")
+	@Column(name="IMAGE_PRODUIT")
 	private String imageProduit;
 
 	@Lob
-	@Column(name = "NOM_FABRIQUANT_PRODUIT")
+	@Column(name="NOM_FABRIQUANT_PRODUIT")
 	private String nomFabriquantProduit;
 
 	@Lob
-	@Column(name = "NOM_PRODUIT")
+	@Column(name="NOM_PRODUIT")
 	private String nomProduit;
 
 	@Lob
-	@Column(name = "NOTICE_PRODUIT")
+	@Column(name="NOTICE_PRODUIT")
 	private String noticeProduit;
 
-	@Column(name = "REQUIERE_ORDONNANCE_PRODUIT")
+	@Column(name="REQUIERE_ORDONNANCE_PRODUIT")
 	private BigDecimal requiereOrdonnanceProduit;
 
-	@Column(name = "VISIBLE_PRODUIT")
+	@Column(name="VISIBLE_PRODUIT")
 	private BigDecimal visibleProduit;
 
-	// bi-directional many-to-one association to ContientOrdonnance
-	@OneToMany(mappedBy = "produit")
+	//bi-directional many-to-one association to ContientOrdonnance
+	@OneToMany(mappedBy="produit")
 	private List<ContientOrdonnance> contientOrdonnances;
 
-	// bi-directional many-to-one association to FournisseurProduit
-	@OneToMany(mappedBy = "produit")
+	//bi-directional many-to-one association to FournisseurProduit
+	@OneToMany(mappedBy="produit")
 	private List<FournisseurProduit> fournits;
 
-	// bi-directional many-to-one association to LotProduit
-	@OneToMany(mappedBy = "produit")
+	//bi-directional many-to-one association to LotProduit
+	@OneToMany(mappedBy="produit")
 	private List<LotProduit> lotProduits;
 
-	// bi-directional many-to-one association to ClassePharmaceutique
+	//bi-directional many-to-one association to ClassePharmaceutique
 	@ManyToOne
-	@JoinColumn(name = "ID_CLASSE_PHARMACEUTIQUE")
+	@JoinColumn(name="ID_CLASSE_PHARMACEUTIQUE")
 	private ClassePharmaceutique classePharmaceutique;
 
-	// bi-directional many-to-many association to Fournisseur
+	//bi-directional many-to-many association to Fournisseur
 	@ManyToMany
-	@JoinTable(name = "FOURNIT", joinColumns = { @JoinColumn(name = "ID_PRODUIT") }, inverseJoinColumns = { @JoinColumn(name = "ID_FOURNISSEUR") })
+	@JoinTable(
+		name="FOURNIT"
+		, joinColumns={
+			@JoinColumn(name="ID_PRODUIT")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="ID_FOURNISSEUR")
+			}
+		)
 	private List<Fournisseur> fournisseurs;
 
-	// bi-directional many-to-one association to Tva
+	//bi-directional many-to-one association to Tva
 	@ManyToOne
-	@JoinColumn(name = "ID_TVA")
+	@JoinColumn(name="ID_TVA")
 	private Tva tva;
 
-	// bi-directional many-to-one association to TypeDeRemboursement
+	//bi-directional many-to-one association to TypeDeRemboursement
 	@ManyToOne
-	@JoinColumn(name = "ID_TYPE_DE_REMBOURSEMENT")
+	@JoinColumn(name="ID_TYPE_DE_REMBOURSEMENT")
 	private TypeDeRemboursement typeDeRemboursement;
 
 	public Produit() {
@@ -132,8 +140,7 @@ public class Produit implements Serializable {
 		return this.requiereOrdonnanceProduit;
 	}
 
-	public void setRequiereOrdonnanceProduit(
-			BigDecimal requiereOrdonnanceProduit) {
+	public void setRequiereOrdonnanceProduit(BigDecimal requiereOrdonnanceProduit) {
 		this.requiereOrdonnanceProduit = requiereOrdonnanceProduit;
 	}
 
@@ -149,21 +156,18 @@ public class Produit implements Serializable {
 		return this.contientOrdonnances;
 	}
 
-	public void setContientOrdonnances(
-			List<ContientOrdonnance> contientOrdonnances) {
+	public void setContientOrdonnances(List<ContientOrdonnance> contientOrdonnances) {
 		this.contientOrdonnances = contientOrdonnances;
 	}
 
-	public ContientOrdonnance addContientOrdonnance(
-			ContientOrdonnance contientOrdonnance) {
+	public ContientOrdonnance addContientOrdonnance(ContientOrdonnance contientOrdonnance) {
 		getContientOrdonnances().add(contientOrdonnance);
 		contientOrdonnance.setProduit(this);
 
 		return contientOrdonnance;
 	}
 
-	public ContientOrdonnance removeContientOrdonnance(
-			ContientOrdonnance contientOrdonnance) {
+	public ContientOrdonnance removeContientOrdonnance(ContientOrdonnance contientOrdonnance) {
 		getContientOrdonnances().remove(contientOrdonnance);
 		contientOrdonnance.setProduit(null);
 
@@ -218,8 +222,7 @@ public class Produit implements Serializable {
 		return this.classePharmaceutique;
 	}
 
-	public void setClassePharmaceutique(
-			ClassePharmaceutique classePharmaceutique) {
+	public void setClassePharmaceutique(ClassePharmaceutique classePharmaceutique) {
 		this.classePharmaceutique = classePharmaceutique;
 	}
 

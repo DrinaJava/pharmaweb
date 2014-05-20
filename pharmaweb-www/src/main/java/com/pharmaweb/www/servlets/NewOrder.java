@@ -102,8 +102,11 @@ public class NewOrder extends HttpServlet {
 				orderBean.addLotProduit(commandeLotProduit);
 				produits.add(commandeLotProduit);
 			}
+			
+			commande.setEstDansLaCommandeClients(produits);
+			request.setAttribute("commande", commande);
+			request.setAttribute("produits", produits);
 		}
-		
 		request.setAttribute("client", client);
 		
 		this.dispatcher = getServletContext().getRequestDispatcher("/neworder.jsp");

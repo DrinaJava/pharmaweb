@@ -6,31 +6,31 @@
 <jsp:include page="includes/header.jsp"/>
 
 <section>
-<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Nom produit</th>
-					<th>Prix unitaire</th>
-					<th>Quantit&eacute;</th>
-					<th>Prix total</th>	
-				</tr>
-			</thead>
-			<tbody>
-			<c:forEach var="cartline" items="${panier}">
-				<tr>
-					<td>${cartline.produit.nomProduit}</td>
-					<td>€</td>
-					<td>${cartline.quantite}</td>
-					<td>€</td>
-					
-				</tr>	
-			</c:forEach>		
-			</tbody>
-		</table>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Nom produit</th>
+				<th>Prix unitaire</th>
+				<th>Quantit&eacute;</th>
+				<th>Prix total</th>	
+			</tr>
+		</thead>
+		<tbody>
+		<c:forEach var="cartline" items="${panier}">
+			<tr>
+				<td>${cartline.produit.nomProduit}</td>
+				<td>€</td>
+				<td>${cartline.quantite}</td>
+				<td>€</td>
+				
+			</tr>	
+		</c:forEach>		
+		</tbody>
+	</table>
 		
-		<div class="text-right">
-			 <a href="Commander?etape=livraison" class="btn btn-success">Continuer ma commande</a>
-		</div>
+	<div class="text-right">
+		 <a href="Commander?etape=livraison" class="btn btn-success">Continuer ma commande</a>
+	</div>
 </section>	
 	
 <jsp:include page="includes/footer.jsp"/>
