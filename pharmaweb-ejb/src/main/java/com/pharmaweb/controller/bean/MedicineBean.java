@@ -1,5 +1,6 @@
 package com.pharmaweb.controller.bean;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -92,25 +93,33 @@ public class MedicineBean extends Bean implements IMedicineBean {
 	}
 
 	@Override
-	public LotProduit getLotById(int idLot) {
+	public LotProduit getLotById(final int idLot) {
 		return this.medicineDAO.getLotById(idLot);
 	}
 
 	@Override
-	public PharmacieStock getPharmacieStockByLot(int idLot) {
+	public PharmacieStock getPharmacieStockByLot(final int idLot) {
 		return this.medicineDAO.getPharmacieStockByLot(idLot);
 	}
-	
+
 	@Override
-	public List<Produit> getPharmacieStockByPharmacie(int idPharmacie){
+	public List<Produit> getPharmacieStockByPharmacie(final int idPharmacie){
 		return this.medicineDAO.getPharmacieStockByPharmacie(idPharmacie);
 	}
 
 	@Override
-	public LotProduit getLotFromProduct(long idProduit, long idPharmacie,
-			int quantite) {
+	public LotProduit getLotFromProduct(final long idProduit, final long idPharmacie,
+			final int quantite) {
 		return this.medicineDAO.getLotFromProduct(idProduit, idPharmacie,
-			quantite);
+				quantite);
 	}
+
+	/* (non-Javadoc)
+	 * @see com.pharmaweb.controller.IMedicineBean#getVisibleProduit(int)
+	 */
+	@Override
+	public BigDecimal getVisibleProduit(final int idProduit) {
+
+		return this.medicineDAO.getVisibleProduit(idProduit);	}
 
 }

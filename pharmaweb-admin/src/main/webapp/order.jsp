@@ -60,7 +60,7 @@
 	  </tr>
 	  <tr>
 		  <td><b>Localité</b></td>
-		  <td>${commande.client.adresse.ville}</td>
+		  <td>${commande.client.adresse.villeAdresse}</td>
 	  </tr>
 	  <tr>
 		  <td><b>Allergies</b></td>
@@ -99,7 +99,7 @@
 					<i class="fa fa-check-circle fa-2x"></i>
 					</c:if>
 					<c:if test="${ligneCommande.lotProduit.produit.requiereOrdonnanceProduit == 1}"> 
-					<i class="fa fa-circle fa-2x"></i>
+					<i class="fa fa-times fa-2x"></i>
 					</c:if>
 					</td>
 					<td>${ligneCommande.prixUnitaireProduitCommande}</td>

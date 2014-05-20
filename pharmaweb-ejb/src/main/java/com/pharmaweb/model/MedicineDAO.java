@@ -78,6 +78,11 @@ public class MedicineDAO extends DAO {
 		return (Produit) this.entityManager.createQuery(sql).getSingleResult();
 	}
 
+	public BigDecimal getVisibleProduit(final int idProduit) {
+		final String sql= "SELECT v.visibleProduit FROM Produit v WHERE v.idProduit = "+String.valueOf(idProduit);
+		return (BigDecimal) this.entityManager.createQuery(sql).getSingleResult();
+	}
+
 
 	public void update(final Produit produit) {
 		this.entityManager.merge(produit);
@@ -94,34 +99,34 @@ public class MedicineDAO extends DAO {
 	}
 
 
-	public LotProduit getLotById(int idLot) {
+	public LotProduit getLotById(final int idLot) {
 		final String sql = "SELECT l FROM LotProduit l WHERE l.idLotProduit = " + String.valueOf(idLot);
 		return (LotProduit) this.entityManager.createQuery(sql).getSingleResult();
 	}
 
 
-	public PharmacieStock getPharmacieStockByLot(int idLot) {
+	public PharmacieStock getPharmacieStockByLot(final int idLot) {
 		final String sql = "SELECT l FROM PharmacieStock l WHERE l.id.idLotProduit = " + String.valueOf(idLot);
 		return (PharmacieStock) this.entityManager.createQuery(sql).getSingleResult();
 	}
 
 
-	public List<Produit> getPharmacieStockByPharmacie(int idPharmacie) {
-		
-		List<Produit> produits = new ArrayList<Produit>();
-		
-		Query query = entityManager.createNativeQuery("SELECT DISTINCT(PRODUIT.ID_PRODUIT)  FROM PRODUIT "+
-	      "INNER JOIN LOT_PRODUIT ON PRODUIT.ID_PRODUIT = LOT_PRODUIT.ID_PRODUIT "+
-	      "INNER JOIN A_EN_STOCK ON LOT_PRODUIT.ID_LOT_PRODUIT = A_EN_STOCK.ID_LOT_PRODUIT "+
-	      "WHERE A_EN_STOCK.ID_PHARMACIE=1 AND PRODUIT.VISIBLE_PRODUIT=1 ");
-		
+	public List<Produit> getPharmacieStockByPharmacie(final int idPharmacie) {
+
+		final List<Produit> produits = new ArrayList<Produit>();
+
+		final Query query = this.entityManager.createNativeQuery("SELECT DISTINCT(PRODUIT.ID_PRODUIT)  FROM PRODUIT "+
+				"INNER JOIN LOT_PRODUIT ON PRODUIT.ID_PRODUIT = LOT_PRODUIT.ID_PRODUIT "+
+				"INNER JOIN A_EN_STOCK ON LOT_PRODUIT.ID_LOT_PRODUIT = A_EN_STOCK.ID_LOT_PRODUIT "+
+				"WHERE A_EN_STOCK.ID_PHARMACIE=1 AND PRODUIT.VISIBLE_PRODUIT=1 ");
+
 		query.setParameter(1, idPharmacie);
-		
-		List<BigDecimal> results = query.getResultList();
-		
-		
-		for (BigDecimal idProduit : results) {
-			Produit produit = this.getByID(idProduit.intValue());
+
+		final List<BigDecimal> results = query.getResultList();
+
+
+		for (final BigDecimal idProduit : results) {
+			final Produit produit = this.getByID(idProduit.intValue());
 			produits.add(produit);
 		}
 
@@ -129,21 +134,21 @@ public class MedicineDAO extends DAO {
 	}
 
 
-	public LotProduit getLotFromProduct(long idProduit, long idPharmacie,
-			int quantite) {
-		String sql = "SELECT LOT_PRODUIT.ID_LOT_PRODUIT FROM LOT_PRODUIT "+
+	public LotProduit getLotFromProduct(final long idProduit, final long idPharmacie,
+			final int quantite) {
+		final String sql = "SELECT LOT_PRODUIT.ID_LOT_PRODUIT FROM LOT_PRODUIT "+
 				"INNER JOIN A_EN_STOCK "+
 				"ON LOT_PRODUIT.ID_LOT_PRODUIT = A_EN_STOCK.ID_LOT_PRODUIT "+
 				"WHERE LOT_PRODUIT.ID_PRODUIT=? AND A_EN_STOCK.ID_PHARMACIE=?";
-		
-		Query query = entityManager.createNativeQuery(sql);
+
+		final Query query = this.entityManager.createNativeQuery(sql);
 		query.setParameter(1, idProduit);
 		query.setParameter(2, 1);
-		
-		List<Object> results = query.getResultList();
-		
-		int idLot = ((BigDecimal) results.get(0)).intValue();
-		
+
+		final List<Object> results = query.getResultList();
+
+		final int idLot = ((BigDecimal) results.get(0)).intValue();
+
 		return this.getLotById(idLot);
 	}
 }
