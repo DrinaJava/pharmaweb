@@ -16,10 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.pharmaweb.controller.IClientBean;
 import com.pharmaweb.controller.IMedicineBean;
 import com.pharmaweb.controller.IOrderBean;
+import com.pharmaweb.controller.IPharmacyBean;
 import com.pharmaweb.model.entities.Client;
 import com.pharmaweb.model.entities.CommandeClient;
 import com.pharmaweb.model.entities.CommandeLotProduit;
+import com.pharmaweb.model.entities.CommandeLotProduitPK;
 import com.pharmaweb.model.entities.LotProduit;
+import com.pharmaweb.model.entities.Pharmacie;
 import com.pharmaweb.model.entities.PharmacieStock;
 import com.pharmaweb.www.Cart;
 import com.pharmaweb.www.CartLine;
@@ -39,8 +42,11 @@ public class NewOrder extends HttpServlet {
     @EJB 
     private IOrderBean orderBean;
     
-    @EJB IMedicineBean medicineBean;
+    @EJB 
+    private IMedicineBean medicineBean;
     
+    @EJB
+    private IPharmacyBean pharmacyBean;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -54,6 +60,8 @@ public class NewOrder extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		Pharmacie pharmacie = this.pharmacyBean.getPharmacyById(1);
+		
 		int idClient = (Integer) request.getSession().getAttribute("idClient");
 		Client client = this.clientBean.getById(idClient);
 		
@@ -63,9 +71,10 @@ public class NewOrder extends HttpServlet {
 			CommandeClient commande = new CommandeClient();
 			commande.setClient(client);
 			commande.setAdresse(client.getAdresse());
-			
+			commande.setPharmacie(pharmacie);
 		
-			
+			int idOrder = orderBean.create(commande);
+			commande = orderBean.getOrderById(idOrder);
 			
 			List<CommandeLotProduit> produits = new ArrayList<CommandeLotProduit>();
 			List<CartLine> lines = ((Cart) request.getSession().getAttribute("cart")).getLines();
@@ -78,18 +87,21 @@ public class NewOrder extends HttpServlet {
 				LotProduit lot = this.medicineBean.getLotFromProduct(idProduit,idPharmacie,quantite);
 				
 				CommandeLotProduit commandeLotProduit = new CommandeLotProduit();
-				PharmacieStock stock = this.medicineBean.getPharmacieStockByLot((int) lot.getIdLotProduit());
+				CommandeLotProduitPK pk = new CommandeLotProduitPK();
 				
+				pk.setIdCommandeClient(commande.getIdCommandeClient());
+				pk.setIdLotProduit(lot.getIdLotProduit());
+				
+				PharmacieStock stock = this.medicineBean.getPharmacieStockByLot((int) lot.getIdLotProduit());
+				commandeLotProduit.setId(pk);
 				commandeLotProduit.setCommandeClient(commande);
 				commandeLotProduit.setLotProduit(lot);
 				commandeLotProduit.setQuantiteCommande(new BigDecimal(cartLine.getQuantite()));
-				
 				commandeLotProduit.setPrixUnitaireProduitCommande(stock.getPrixUnitaireProduit());
 				
+				orderBean.addLotProduit(commandeLotProduit);
 				produits.add(commandeLotProduit);
 			}
-			commande.setEstDansLaCommandeClients(produits);
-			orderBean.create(commande);
 		}
 		
 		request.setAttribute("client", client);

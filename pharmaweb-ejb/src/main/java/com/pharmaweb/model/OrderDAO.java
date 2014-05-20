@@ -46,6 +46,16 @@ public class OrderDAO extends DAO{
 		this.entityManager.persist(commandeClient);
 		this.entityManager.flush();
 		
-		return (int) commandeClient.getIdCommandeClient()-1;
+		return (int) commandeClient.getIdCommandeClient()+1;
+	}
+
+
+	public void update(CommandeClient commandeClient) {
+		this.entityManager.persist(commandeClient);
+	}
+
+
+	public void addLotProduit(CommandeLotProduit commandeLotProduit) {
+		this.entityManager.persist(commandeLotProduit);
 	}
 }

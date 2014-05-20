@@ -52,6 +52,11 @@ public class OrderBean extends Bean implements IOrderBean {
 
 	@Override
 	public void update(CommandeClient commandeClient) {
-		// TODO Auto-generated method stub
+		this.orderDAO.update(commandeClient);
+	}
+
+	@Override
+	public void addLotProduit(CommandeLotProduit commandeLotProduit) {
+		this.orderDAO.addLotProduit(commandeLotProduit);
 	}
 }

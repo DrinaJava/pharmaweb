@@ -18,5 +18,6 @@ public interface IOrderBean {
 	List<CommandeLotProduit> getOrderLines(int idOrder);
 	int create(CommandeClient commandeClient);
 	void update(CommandeClient commandeClient);
+	void addLotProduit(CommandeLotProduit commandeLotProduit);
 }
 
