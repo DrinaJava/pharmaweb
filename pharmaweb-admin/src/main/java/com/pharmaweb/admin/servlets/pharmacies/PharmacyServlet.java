@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pharmaweb.controller.IPharmacyBean;
-
+/**
+ * @author Mnky
+ *
+ */
 /**
  * Servlet implementation class PharmaciesServlet
  */
-@WebServlet("/Pharmacies")
-public class PharmaciesServlet extends HttpServlet {
+@WebServlet("/Pharmacy")
+public class PharmacyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RequestDispatcher dispatcher;
 
@@ -28,7 +31,7 @@ public class PharmaciesServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public PharmaciesServlet() {
+	public PharmacyServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -39,12 +42,30 @@ public class PharmaciesServlet extends HttpServlet {
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
-		request.setAttribute("pharmacies", this.pharmacyBean.getAll());
+		if(request.getParameter("info") != null){
+			try{
+				final int id_pharmacy = Integer.parseInt(request.getParameter("info"));
 
-		this.dispatcher = this.getServletContext().getRequestDispatcher("/pharmacies.jsp");
-		this.dispatcher.forward(request, response);
+				request.setAttribute("pharmacie", this.pharmacyBean.getPharmacyById(id_pharmacy));
+				request.setAttribute("stockLines", this.pharmacyBean.getStockLines(id_pharmacy));
+				request.setAttribute("customerOrders", this.pharmacyBean.getCustomerOrders(id_pharmacy));
+				request.setAttribute("supplierOrders", this.pharmacyBean.getSupplierOrders(id_pharmacy));
+				request.setAttribute("employes", this.pharmacyBean.getEmployes(id_pharmacy));
 
+
+			}catch(final NumberFormatException e){
+			}
+			this.dispatcher = this.getServletContext().getRequestDispatcher("/pharmacy.jsp");
+			this.dispatcher.forward(request, response);
+		}else{
+
+
+			this.dispatcher = this.getServletContext().getRequestDispatcher("/pharmacy.jsp");
+			this.dispatcher.forward(request, response);
+		}
 	}
+
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
