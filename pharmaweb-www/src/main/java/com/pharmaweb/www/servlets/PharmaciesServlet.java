@@ -6,30 +6,30 @@ import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pharmaweb.controller.IClientBean;
-import com.pharmaweb.model.entities.Client;
-import com.pharmaweb.www.LoginCookieHandler;
+import com.pharmaweb.controller.IPharmacyBean;
 
 /**
- * Servlet implementation class AccountServlet
+ * Servlet implementation class PharmaciesServlet
  */
-@WebServlet(name = "Compte", urlPatterns = { "/Compte" })
-public class AccountServlet extends HttpServlet {
+@WebServlet(name = "Pharmacies", urlPatterns = { "/Pharmacies" })
+public class PharmaciesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RequestDispatcher dispatcher;
-    
-	@EJB
-	private IClientBean clientBean;
+       
+	@EJB 
+	private IPharmacyBean pharmacyBean;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AccountServlet() {
+    public PharmaciesServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -37,19 +37,20 @@ public class AccountServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		LoginCookieHandler.login(request);
 		
-		if(request.getSession().getAttribute("idClient") != null){
-			int idClient = (Integer) request.getSession().getAttribute("idClient");
+		if(request.getParameter("pharmacie") != null){
+			String idPharmacie = request.getParameter("pharmacie");
+			Cookie cookie = new Cookie("idPharmacie", idPharmacie);
+			cookie.setMaxAge(172800);
 			
-			Client client = clientBean.getById(idClient);
+			response.addCookie(cookie);
+			response.sendRedirect("Catalog");
 			
-			request.setAttribute("client", client);		
-			
-			this.dispatcher = this.getServletContext().getRequestDispatcher("/compte.jsp");
-			this.dispatcher.forward(request, response);
 		}else{
-			response.sendRedirect("Connexion");
+			request.setAttribute("pharmacies", pharmacyBean.getAll());
+			
+			this.dispatcher = this.getServletContext().getRequestDispatcher("/pharmacies.jsp");
+			this.dispatcher.forward(request, response);	
 		}
 	}
 

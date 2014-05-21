@@ -6,11 +6,13 @@ import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pharmaweb.controller.IMedicineBean;
+import com.pharmaweb.controller.IPharmacyBean;
 import com.pharmaweb.www.Cart;
 import com.pharmaweb.www.I18n;
 import com.pharmaweb.www.LoginCookieHandler;
@@ -27,13 +29,15 @@ public class CatalogServlet extends HttpServlet {
 
 	@EJB
 	private IMedicineBean medicineBean;
+	
+	@EJB
+	private IPharmacyBean pharmacyBean;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public CatalogServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -52,7 +56,9 @@ public class CatalogServlet extends HttpServlet {
 			request.setAttribute("message", new Message("","success",I18n._(I18n.CART_ADD)));
 		}
 		
-		request.setAttribute("produits", this.medicineBean.getPharmacieStockByPharmacie(1));
+		int idPharmacie = this.getIdPharmacie(request);
+		
+		request.setAttribute("produits", this.medicineBean.getPharmacieStockByPharmacie(idPharmacie));
 		request.setAttribute("categories", this.medicineBean.getFamilies());
 
 		this.dispatcher = this.getServletContext().getRequestDispatcher("/catalog.jsp");
@@ -65,8 +71,6 @@ public class CatalogServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-		//TODO
-
 	}
 	
 	private void addtocart(HttpServletRequest request, int idProduit) throws IOException {
@@ -74,10 +78,21 @@ public class CatalogServlet extends HttpServlet {
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
 		
 		if(cart == null){
-			cart = new Cart(medicineBean);
+			cart = new Cart(medicineBean,this.getIdPharmacie(request));
 		}	
 		cart.add(idProduit);
 
 		request.getSession().setAttribute("cart",cart);
 	}	
+	
+	private int getIdPharmacie(HttpServletRequest request){
+		int idPharmacie = 0;		
+		Cookie[] cookies = request.getCookies();
+		for (int i = 0; i < cookies.length; i++) {
+			if(cookies[i].getName().equals("idPharmacie")){
+				idPharmacie = Integer.parseInt(cookies[i].getValue());
+			}
+		}	
+		return idPharmacie;
+	}
 }

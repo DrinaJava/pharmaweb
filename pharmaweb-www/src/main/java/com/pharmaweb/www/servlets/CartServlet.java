@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +31,6 @@ public class CartServlet extends HttpServlet {
      */
     public CartServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -38,10 +38,19 @@ public class CartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int idPharmacie = 0;
+		Cookie[] cookies = request.getCookies();
+		for (int i = 0; i < cookies.length; i++) {
+			if(cookies[i].getName().equals("idPharmacie")){
+				idPharmacie = Integer.parseInt(cookies[i].getValue());
+			}
+		}
+		
+		
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
 		
 		if(cart == null){
-			cart = new Cart(medicineBean);
+			cart = new Cart(medicineBean,idPharmacie);
 		}		
 		
 		if(request.getParameter("del") != null){

@@ -5,8 +5,8 @@
 <jsp:include page="includes/header.jsp"/>
 
 <section>
-	<h1>Mon compte</h1>
-	
+	<h1>Mes informations personnelles</h1>
+
 	<div class="col-md-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">

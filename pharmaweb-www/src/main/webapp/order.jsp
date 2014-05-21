@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>        
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>   
+    
 <jsp:include page="includes/header.jsp"/>
 
-
 <section>
-
-	<h1>Historique de mes commandes</h1>
+	
+	<h2>Commande n°${commande.numCommandeClient}</h2>
 
 	<div class="col-md-4">
 		<div class="panel panel-default">
@@ -23,37 +21,34 @@
 			</div>
 		</div>
 	</div>
-	
 	<div class="col-md-8">	
 		<div class="panel panel-default">
 			<div class="panel-body">
-				
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>Numéro de commande</th>
-							<th>Date</th>
-							<th>Statut</th>
+							<th>Nom produit</th>
+							<th>Prix unitaire</th>
+							<th>Quantit&eacute;</th>
 							<th>Prix total</th>	
 						</tr>
 					</thead>
 					<tbody>
-					<c:set var="count" value="0" scope="page" />
-	
-					<c:forEach var="commande" items="${commandes}">
+					<c:forEach var="line" items="${produits}">
 						<tr>
-							<td><a href="Commande?details=${commande.idCommandeClient}">${commande.numCommandeClient}</a></td>
-							<td><fmt:formatDate pattern="dd/MM/yyyy" value="${commande.dateCommandeClient}" /></td>
-							<td>${commande.statutCommandeClient}</td>
-							<td><fmt:formatNumber value="${total[count]}" type="currency" currencySymbol="&euro;"/></td>
-								
+							<td>${line.lotProduit.produit.nomProduit}</td>
+							<td>${line.prixUnitaireProduitCommande} €</td>
+							<td>${line.quantiteCommande}</td>
+							<td>${line.prixUnitaireProduitCommande * line.quantiteCommande} €</td>
 						</tr>	
-						<c:set var="count" value="${count + 1}" scope="page"/>
 					</c:forEach>		
 					</tbody>
 				</table>
+				<div class="text-right">
+					<b>Total : ${totalht} €</b>
+				</div>					
 			</div>
-		</div>	
+		</div>
 	</div>
 </section>	
 	

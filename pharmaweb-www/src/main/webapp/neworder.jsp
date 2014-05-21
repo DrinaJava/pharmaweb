@@ -30,7 +30,7 @@
 	<c:if test="${param.etape == 'recapitulatif' }">	
 		<h1>Récapitulatif de la commande</h1>
 		
-			<table class="table table-striped">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Nom produit</th>

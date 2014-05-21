@@ -17,15 +17,18 @@ public class Cart {
 
 	private List<CartLine> lines;
 	private IMedicineBean bean;
+	private int idPharmacie;
 
-	public Cart(IMedicineBean bean) {
+	public Cart(IMedicineBean bean,int idPharmacie) {
 		this.bean = bean;
 		this.lines = new ArrayList<CartLine>();
+		this.idPharmacie = idPharmacie;
 	}
 
-	public Cart(IMedicineBean bean, List<CartLine> lines) {
+	public Cart(IMedicineBean bean, List<CartLine> lines,int idPharmacie) {
 		this.lines = lines;
 		this.bean = bean;
+		this.idPharmacie = idPharmacie;
 	}
 
 	public List<CartLine> getLines() {
@@ -72,7 +75,7 @@ public class Cart {
 	
 	private double getProductPrice(int idProduit){
 		//TODO fix pharmacie id
-		LotProduit lot = bean.getLotFromProduct(idProduit, 1, 1);
+		LotProduit lot = bean.getLotFromProduct(idProduit, idPharmacie, 1);
 		PharmacieStock stock = this.bean.getPharmacieStockByLot((int) lot.getIdLotProduit());
 		return stock.getPrixUnitaireProduit().doubleValue();
 	}

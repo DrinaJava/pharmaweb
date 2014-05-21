@@ -43,15 +43,18 @@ public class OrdersServlet extends HttpServlet {
 		
 		request.setAttribute("commandes", orderBean.getAll());
 		
-		double total = 0;
+		double[] total = new double[orderBean.getAll().size()];
 		
+		int i = 0;
 		for (CommandeClient commande : orderBean.getAll()) {
+			
 			for(CommandeLotProduit produit : orderBean.getOrderLines((int) commande.getIdCommandeClient())){
 				if(produit != null){
-					total += produit.getPrixUnitaireProduitCommande().doubleValue() * produit.getQuantiteCommande().doubleValue();
+					total[i] += produit.getPrixUnitaireProduitCommande().doubleValue() * produit.getQuantiteCommande().doubleValue();
 					
 				}
 			}
+			i++;
 		}
 		
 		request.setAttribute("total", total);
