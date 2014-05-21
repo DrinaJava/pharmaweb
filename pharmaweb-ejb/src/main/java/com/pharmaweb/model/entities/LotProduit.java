@@ -1,7 +1,9 @@
 package com.pharmaweb.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class LotProduit implements Serializable {
 
 	@Id
 	@Column(name="ID_LOT_PRODUIT")
+	@SequenceGenerator(name="IncLot",sequenceName="SEQ_LOT_PRODUIT", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="IncLot")	
 	private long idLotProduit;
 
 	@Column(name="DATE_EXPIRATION_LOT_PRODUIT")

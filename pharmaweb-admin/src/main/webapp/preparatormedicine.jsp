@@ -5,90 +5,105 @@
 <jsp:include page="includes/header.jsp"/>
 
 <section>
-	<h1>&Eacute;dition d'un m&eacute;dicament</h1>
+	<h1>&Eacute;dition du stock</h1>
+
+<c:if test="${param.edit != null}">
+	<table class="table table-striped">
+		<tr>
+			<th>Référence</th>
+			<th>Prix Unitaire HT</th>
+			<td>Quantité en stock</td>
+			<td>Date d'expiration</td>
+		</tr>
+		<c:forEach var="stock" items="${stocks}">
+			<tr>
+				<td><a href="PreparatorCatalog?edit=${stock.lotProduit.produit.idProduit}&lot=${stock.lotProduit.idLotProduit}">
+				${stock.lotProduit.numLotProduit}</a></td>
+				<td>${stock.prixUnitaireProduit}</td>
+				<td>${stock.quantiteStockProduit}</td>
+				<td>${stock.lotProduit.dateExpirationLotProduit}</td>
+			</tr>
+		</c:forEach>
+		
+	</table>
 
 	<form role="form" method="post">
 	
+		<h3>Edition d'un lot</h3>
+		
 		<div class="form-group">
-			<label for="name">Nom</label>
-			<input type="text" class="form-control" id="name" name="name" value="${produit.nomProduit}">
+			<label for="numlot">Numéro du lot</label> 
+			<input type="text" class="form-control" id="numlot"name="numlot" value="${stock.lotProduit.numLotProduit}"/>
 		</div>
 		
 		<div class="form-group">
-			<label for="manufacter">Fabricant</label> 
-			<input type="text" class="form-control" id="manufacter"name="manufacter" value="${produit.nomFabriquantProduit}"/>
-		</div>
-		
-		<div class="form-group">
-			<label for="description">Description</label> 
-			<textarea class="form-control" id="description"name="description">${produit.decriptionProduit}</textarea>
-		</div>
-		
-		<label for="classe">Classe pharmaceutique</label>
-		<select class="form-control" id="classe" name="classe">
-			<c:forEach var="classe" items="${classes}">
-					<c:if test="${classe.idClassePharmaceutique == produit.classePharmaceutique.idClassePharmaceutique}">
-						<option value="${classe.idClassePharmaceutique}" selected="selected">${classe.libelleClassePharmaceutique}</option>
-					</c:if>
-					<c:if test="${classe.idClassePharmaceutique != produit.classePharmaceutique.idClassePharmaceutique}">
-						<option value="${classe.idClassePharmaceutique}">${classe.libelleClassePharmaceutique}</option>
-					</c:if>				
-			</c:forEach>
-		</select>
-	
-	
-		<label for="tva">TVA</label>
-		<select class="form-control" id="tva" name="tva">
-			<c:forEach var="tva" items="${tvas}">
-					<c:if test="${tva.idTva == produit.tva.idTva}">
-						<option value="${tva.idTva}" selected="selected">${tva.tauxTva}</option>
-					</c:if>
-					<c:if test="${tva.idTva != produit.tva.idTva}">
-						<option value="${tva.idTva}">${tva.tauxTva}</option>
-					</c:if>	
-			</c:forEach>
-		</select>
-		
-		<label for="remboursement">Taux de remboursement</label>
-		<select class="form-control" id="remboursement" name="remboursement">
-			<c:forEach var="remboursement" items="${remboursements}">
-			
-					<c:if test="${remboursement.idTypeDeRemboursement == produit.typeDeRemboursement.idTypeDeRemboursement}">
-						<option value="${remboursement.idTypeDeRemboursement}" selected="selected">${remboursement.libelleTypeDeRemboursement}</option>
-					</c:if>
-					<c:if test="${remboursement.idTypeDeRemboursement != produit.typeDeRemboursement.idTypeDeRemboursement}">
-						<option value="${remboursement.idTypeDeRemboursement}">${remboursement.libelleTypeDeRemboursement}</option>
-					</c:if>	
-			</c:forEach>
-		</select>		
-		
-		<div class="checkbox">
-			<label>
-				<c:if test="${ordonnance == true}">
-					<input type="checkbox" name="ordonance" value="1" checked="checked"> Uniquement sur ordonnace
-				</c:if>
-				<c:if test="${ordonnance == false}">
-					<input type="checkbox" name="ordonance" value="1"> Uniquement sur ordonnace
-				</c:if>
-			</label>
-		</div>
-		
-		<div class="form-group">
-			<label for="picture"></label> 
-			<input type="file" id="picture">
-			<p class="help-block">Photo du produit</p>
-		</div>
-		
-		<div class="form-group">
-			<label for="notice"></label> 
-			<input type="file" id="notice">
-			<p class="help-block">Notice du médicament</p>
+			<label for="puht">Prix Unitaire HT</label> 
+			<input type="text" class="form-control" id="puht"name="puht" value="${stock.prixUnitaireProduit}"/>
 		</div>	
+			
+		<div class="form-group">
+			<label for="qte">Quantité en stock</label> 
+			<input type="text" class="form-control" id="qte"name="qte" value="${stock.quantiteStockProduit}"/>
+		</div>	
+		<div class="form-group">
+			<label for="prixachat">Prix d'achat</label> 
+			<input type="text" class="form-control" id="prixachat"name="prixachat" value="${stock.lotProduit.prixDAchatLotProduit}"/>
+		</div>	
+		<div class="form-group">
+			<label for="expiredate">Date d'expiration</label> 
+			<input type="text" class="form-control" id="expiredate"name="expiredate" value="${stock.lotProduit.dateExpirationLotProduit}"/>
+		</div>	
+				
 		<input type="submit" class="btn btn-primary" value="Enregister"/>
 		<a href="PreparatorCatalog" class="btn btn-danger" >Annuler</a>
 	</form>
+</c:if>
+<c:if test="${param.edit == null}">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3>Ajout médicament</h3>
+		</div>
+		<div class="panel-body">
+			<form method="post">
 
-
+				<div class="form-group">
+				<label for="produit">Produit</label> 
+					<select id="produit" name="produit">
+						<c:forEach var="produit" items="${produits}">
+							<option value="${produit.idProduit}">${produit.nomProduit}</option>
+						</c:forEach>
+					</select>
+				</div>	
+				
+				<div class="form-group">
+					<label for="numlot">Numéro du lot</label> 
+					<input type="text" class="form-control" id="numlot"name="numlot" value="${stock.lotProduit.numLotProduit}"/>
+				</div>
+				
+				<div class="form-group">
+					<label for="puht">Prix Unitaire HT</label> 
+					<input type="text" class="form-control" id="puht"name="puht" value="${stock.prixUnitaireProduit}"/>
+				</div>	
+					
+				<div class="form-group">
+					<label for="qte">Quantité en stock</label> 
+					<input type="text" class="form-control" id="qte"name="qte" value="${stock.quantiteStockProduit}"/>
+				</div>	
+				<div class="form-group">
+					<label for="prixachat">Prix d'achat</label> 
+					<input type="text" class="form-control" id="prixachat"name="prixachat" value="${stock.lotProduit.prixDAchatLotProduit}"/>
+				</div>	
+				<div class="form-group">
+					<label for="expiredate">Date d'expiration</label> 
+					<input type="text" class="form-control" id="expiredate"name="expiredate" value="${stock.lotProduit.dateExpirationLotProduit}"/>
+				</div>				
+				
+				<input type="submit" class="btn btn-primary" value="Enregister"/>
+				<a href="PreparatorCatalog" class="btn btn-danger">Annuler</a>
+			</form>
+		</div>
+	</div>
+</c:if>
 </section>	
 	
 <jsp:include page="includes/footer.jsp"/>

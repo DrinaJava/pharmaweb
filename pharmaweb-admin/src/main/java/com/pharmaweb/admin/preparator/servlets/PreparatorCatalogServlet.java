@@ -2,6 +2,7 @@ package com.pharmaweb.admin.preparator.servlets;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -15,15 +16,19 @@ import com.pharmaweb.admin.Message;
 import com.pharmaweb.admin.i18n.I18n;
 import com.pharmaweb.controller.IMedicineBean;
 import com.pharmaweb.controller.IPharmacyBean;
+import com.pharmaweb.controller.ISupplierBean;
 import com.pharmaweb.model.entities.ClassePharmaceutique;
+import com.pharmaweb.model.entities.Fournisseur;
+import com.pharmaweb.model.entities.LotProduit;
+import com.pharmaweb.model.entities.Pharmacie;
+import com.pharmaweb.model.entities.PharmacieStock;
+import com.pharmaweb.model.entities.PharmacieStockPK;
 import com.pharmaweb.model.entities.Produit;
 import com.pharmaweb.model.entities.Tva;
 import com.pharmaweb.model.entities.TypeDeRemboursement;
 /**
  * @author Mnky
  *
- */
-/**
  * Servlet implementation class PharmaciesServlet
  */
 @WebServlet("/PreparatorCatalog")
@@ -35,7 +40,8 @@ public class PreparatorCatalogServlet extends HttpServlet {
 	private IMedicineBean medicineBean;
 	@EJB
 	private IPharmacyBean pharmacyBean;
-
+	@EJB
+	private ISupplierBean supplierBean;
 
 
 	/**
@@ -52,32 +58,30 @@ public class PreparatorCatalogServlet extends HttpServlet {
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
+		
+		int idPharmacie = 1; //TODO fix that
 
-
-		request.setAttribute("stockLines", this.medicineBean.getPharmacieStockByPharmacie(1));
+		request.setAttribute("stockLines", this.medicineBean.getPharmacieStockByPharmacie(idPharmacie));
 		request.getSession().removeAttribute("message");
 
 		if(request.getParameter("edit") != null){
-			try{
-				final int idProduit = Integer.parseInt(request.getParameter("edit"));
-				final Produit produit = this.medicineBean.getByID(idProduit);
+		
+			final int idProduit = Integer.parseInt(request.getParameter("edit"));
+			request.setAttribute("stocks", this.medicineBean.getLotsFromProduct(idProduit, idPharmacie));
 
-				final boolean ordo = produit.getRequiereOrdonnanceProduit().toString().equals("1") ? true : false;
-
-				request.setAttribute("ordonnance", ordo);
-				request.setAttribute("remboursements", this.medicineBean.getTypesRemboursement());
-				request.setAttribute("classes", this.medicineBean.getFamilies());
-				request.setAttribute("tvas", this.medicineBean.getAllTva());
-				request.setAttribute("produit", produit);
-			}catch(final NumberFormatException e){
+			if(request.getParameter("lot") != null){
+				
+				final int idLot = Integer.parseInt(request.getParameter("lot"));
+				request.setAttribute("stock", this.medicineBean.getPharmacieStockByLot(idLot));
 			}
+			
 			this.dispatcher = this.getServletContext().getRequestDispatcher("/preparatormedicine.jsp");
 			this.dispatcher.forward(request, response);
+			
 		}else if(request.getParameter("new") != null){
 
-			request.setAttribute("remboursements", this.medicineBean.getTypesRemboursement());
-			request.setAttribute("classes", this.medicineBean.getFamilies());
-			request.setAttribute("tvas", this.medicineBean.getAllTva());
+			request.setAttribute("produits", this.medicineBean.getAll());
+
 			this.dispatcher = this.getServletContext().getRequestDispatcher("/preparatormedicine.jsp");
 			this.dispatcher.forward(request, response);
 
@@ -92,64 +96,118 @@ public class PreparatorCatalogServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("edit") != null)
-			try{
-				final int idProduit = Integer.parseInt(request.getParameter("edit"));
-				final Produit produit = this.medicineBean.getByID(idProduit);
+		
+		
+		int idPharmacie = 1; //TODO fix that
+		Pharmacie pharmacie = this.pharmacyBean.getPharmacyById(idPharmacie);
+		
+		
+		if(request.getParameter("edit") != null){
+			
+			final int idProduit = Integer.parseInt(request.getParameter("edit"));
+			Produit produit = this.medicineBean.getByID(idProduit);
+			
+			if(request.getParameter("lot") != null){
+				final int idLot = Integer.parseInt(request.getParameter("lot"));
+				
+				LotProduit lot = this.medicineBean.getLotById(idLot);
+				PharmacieStock stock = this.medicineBean.getPharmacieStockByLot(idLot);
+				
+				String numLotProduit = request.getParameter("numlot");
+				BigDecimal prixAchat = new BigDecimal(request.getParameter("prixachat"));
+				String dateExpirationLotProduit = request.getParameter("expiredate");
+				BigDecimal prixUnitaireProduit = new BigDecimal(request.getParameter("puht"));
+				BigDecimal quantiteStockProduit = new BigDecimal(request.getParameter("qte"));
+						
+				lot.setNumLotProduit(numLotProduit);
+				lot.setPrixDAchatLotProduit(prixAchat);
+				lot.setDateExpirationLotProduit(dateExpirationLotProduit);
+				
+				stock.setPrixUnitaireProduit(prixUnitaireProduit);
+				stock.setQuantiteStockProduit(quantiteStockProduit);
+				
+				this.medicineBean.updateLot(lot);
+				this.medicineBean.updatePharmacieStock(stock);
 
-				this.save(request, produit);
-				this.edit(produit);
-
-				request.getSession().setAttribute("message", new Message("", "success", I18n._(I18n.MEDICINE_EDIT_SUCCESS)));
-				response.sendRedirect("PreparatorCatalog");
-
-			}catch(final NumberFormatException e){
+			}else{ //New
+				
+				Fournisseur supplier = this.supplierBean.getById(1); //TODO fix that
+				
+				LotProduit lot = new LotProduit();
+				PharmacieStock stock = new PharmacieStock();
+				
+				String numLotProduit = request.getParameter("numlot");
+				BigDecimal prixAchat = new BigDecimal(request.getParameter("prixachat"));
+				String dateExpirationLotProduit = request.getParameter("expiredate");
+				BigDecimal prixUnitaireProduit = new BigDecimal(request.getParameter("puht"));
+				BigDecimal quantiteStockProduit = new BigDecimal(request.getParameter("qte"));
+				
+				lot.setProduit(produit);
+				lot.setNumLotProduit(numLotProduit);
+				lot.setPrixDAchatLotProduit(prixAchat);
+				lot.setDateExpirationLotProduit(dateExpirationLotProduit);
+				lot.setFournisseur(supplier);
+				
+				int idLot = this.medicineBean.addLot(lot);
+				lot = this.medicineBean.getLotById(idLot);
+				
+				PharmacieStockPK pk = new PharmacieStockPK();
+				pk.setIdLotProduit(idLot);
+				pk.setIdPharmacie(idPharmacie);
+				
+				stock.setPrixUnitaireProduit(prixUnitaireProduit);
+				stock.setQuantiteStockProduit(quantiteStockProduit);
+				stock.setLotProduit(lot);
+				stock.setPharmacie(pharmacie);
+				stock.setId(pk);
+				
+				this.medicineBean.addPharmacieStock(stock);
 			}
+			
+			request.setAttribute("stocks", this.medicineBean.getLotsFromProduct(idProduit, idPharmacie));
+			
+			this.dispatcher = this.getServletContext().getRequestDispatcher("/preparatormedicine.jsp");
+			this.dispatcher.forward(request, response);			
+		}
 		else if(request.getParameter("new") != null){
-			final Produit produit = new Produit();
 
-			this.save(request, produit);
-			this.add(produit);
+			final int idProduit = Integer.parseInt(request.getParameter("produit"));
+			Produit produit = this.medicineBean.getByID(idProduit);
+			
+			Fournisseur supplier = this.supplierBean.getById(1); //TODO fix that
+			
+			LotProduit lot = new LotProduit();
+			PharmacieStock stock = new PharmacieStock();
+			
+			String numLotProduit = request.getParameter("numlot");
+			BigDecimal prixAchat = new BigDecimal(request.getParameter("prixachat"));
+			String dateExpirationLotProduit = request.getParameter("expiredate");
+			BigDecimal prixUnitaireProduit = new BigDecimal(request.getParameter("puht"));
+			BigDecimal quantiteStockProduit = new BigDecimal(request.getParameter("qte"));
+			
+			lot.setProduit(produit);
+			lot.setNumLotProduit(numLotProduit);
+			lot.setPrixDAchatLotProduit(prixAchat);
+			lot.setDateExpirationLotProduit(dateExpirationLotProduit);
+			lot.setFournisseur(supplier);
+			
+			int idLot = this.medicineBean.addLot(lot);
+			lot = this.medicineBean.getLotById(idLot);
+			
+			PharmacieStockPK pk = new PharmacieStockPK();
+			pk.setIdLotProduit(idLot);
+			pk.setIdPharmacie(idPharmacie);
+			
+			stock.setPrixUnitaireProduit(prixUnitaireProduit);
+			stock.setQuantiteStockProduit(quantiteStockProduit);
+			stock.setLotProduit(lot);
+			stock.setPharmacie(pharmacie);
+			stock.setId(pk);
+			
+			this.medicineBean.addPharmacieStock(stock);
 
 			request.getSession().setAttribute("message", new Message("", "success", I18n._(I18n.MEDICINE_CREATE_SUCCESS)));
 			response.sendRedirect("PreparatorCatalog");
 		}
 	}
-
-
-
-
-	private void save(final HttpServletRequest request, final Produit produit){
-		final String name = request.getParameter("name");
-		final String manufacter = request.getParameter("manufacter");
-		final String description = request.getParameter("description");
-		final int idClasse = Integer.parseInt(request.getParameter("classe"));
-		final int idTva = Integer.parseInt(request.getParameter("tva"));
-		final int idTypeRemboursement = Integer.parseInt(request.getParameter("remboursement"));
-		String ordonance = request.getParameter("ordonance");
-		ordonance = ordonance == null ? "0" : "1";
-
-		final ClassePharmaceutique classe = this.medicineBean.getFamilyById(idClasse);
-		final Tva tva = this.medicineBean.getTvaById(idTva);
-		final TypeDeRemboursement typeRemboursement = this.medicineBean.getTypeRemboursementById(idTypeRemboursement);
-
-		produit.setNomProduit(name);
-		produit.setNomFabriquantProduit(manufacter);
-		produit.setDecriptionProduit(description);
-		produit.setClassePharmaceutique(classe);
-		produit.setTypeDeRemboursement(typeRemboursement);
-		produit.setTva(tva);
-		produit.setRequiereOrdonnanceProduit(new BigDecimal(ordonance));
-	}
-
-
-
-	private void add(final Produit produit){
-		this.medicineBean.add(produit);
-	}
-
-	private void edit(final Produit produit){
-		this.medicineBean.update(produit);
-	}
-
 }

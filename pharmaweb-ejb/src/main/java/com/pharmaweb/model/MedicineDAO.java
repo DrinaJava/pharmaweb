@@ -189,5 +189,36 @@ public class MedicineDAO extends DAO {
 
 		return produits;
 	}
+
+
+	public List<PharmacieStock> getLotsFromProduct(long idProduit, long idPharmacie) {
+		String sql = "SELECT s FROM PharmacieStock s WHERE s.lotProduit.produit.idProduit = "+String.valueOf(idProduit)+" AND s.pharmacie.idPharmacie = "+String.valueOf(idPharmacie);
+		Query query = entityManager.createQuery(sql);
+		
+	
+		return query.getResultList();
+	}
+
+
+	public int addLot(LotProduit lot) {
+		this.entityManager.persist(lot);
+		this.entityManager.flush();
+		
+		return (int) (lot.getIdLotProduit() + 1);
+	}
+
+
+	public void addPharmacieStock(PharmacieStock stock) {
+		this.entityManager.persist(stock);
+	}
+	
+	public void updateLot(LotProduit lot) {
+		this.entityManager.merge(lot);
+	}
+
+
+	public void updatePharmacieStock(PharmacieStock stock) {
+		this.entityManager.merge(stock);
+	}	
 }
 

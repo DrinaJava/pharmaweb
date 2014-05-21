@@ -119,5 +119,30 @@ public class MedicineBean extends Bean implements IMedicineBean {
 		return this.medicineDAO.getPharmacieStockByPharmacie(idPharmacie, idClasse);
 	}
 
+	@Override
+	public List<PharmacieStock> getLotsFromProduct(long idProduit, long idPharmacie) {
+		return this.medicineDAO.getLotsFromProduct(idProduit, idPharmacie);
+	}
+
+	@Override
+	public int addLot(LotProduit lot) {
+		return this.medicineDAO.addLot(lot);
+	}
+
+	@Override
+	public void addPharmacieStock(PharmacieStock stock) {
+		this.medicineDAO.addPharmacieStock(stock);
+	}
+
+	@Override
+	public void updateLot(LotProduit lot) {
+		this.medicineDAO.updateLot(lot);
+	}
+
+	@Override
+	public void updatePharmacieStock(PharmacieStock stock) {
+		this.medicineDAO.updatePharmacieStock(stock);
+	}
+
 
 }
