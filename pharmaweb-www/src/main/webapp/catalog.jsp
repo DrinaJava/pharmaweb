@@ -36,6 +36,7 @@
 		</div>
 		<div class="col-md-9">
 			<div class="row">
+				<c:set var="count" value="0" scope="page" />
 				<c:forEach var="produit" items="${produits}">
 					<div class="col-6 col-sm-6">
 						<h2>${produit.nomProduit}</h2>
@@ -44,6 +45,7 @@
 						<p>${produit.nomFabriquantProduit}</p>
 						<p>${produit.classePharmaceutique.libelleClassePharmaceutique}</p>
 						<p>${produit.classePharmaceutique.classePharmaceutique.libelleClassePharmaceutique}</p>
+						<h3>${prices[count]} €</h3>
 						<p>
 							<a class="btn btn-sm btn-default"
 								href="?cartadd=${produit.idProduit}" role="button"> <i
@@ -54,6 +56,7 @@
 							</a>
 						</p>
 					</div>
+					<c:set var="count" value="${count + 1}" scope="page"/>
 				</c:forEach>
 			</div>
 		</div>

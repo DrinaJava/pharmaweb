@@ -38,8 +38,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					<c:set var="count" value="0" scope="page" />
-	
+					
 					<c:forEach var="commande" items="${commandes}">
 						<tr>
 							<td><a href="Commande?details=${commande.idCommandeClient}">${commande.numCommandeClient}</a></td>

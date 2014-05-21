@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.pharmaweb.controller.IMedicineBean;
 import com.pharmaweb.controller.IPharmacyBean;
 import com.pharmaweb.model.entities.ClassePharmaceutique;
+import com.pharmaweb.model.entities.LotProduit;
+import com.pharmaweb.model.entities.PharmacieStock;
 import com.pharmaweb.model.entities.Produit;
 import com.pharmaweb.www.Cart;
 import com.pharmaweb.www.I18n;
@@ -64,13 +66,36 @@ public class CatalogServlet extends HttpServlet {
 		
 		List<Produit> produits = new ArrayList<Produit>();
 		
+		
+		
 		if(request.getParameter("cat") != null){
 			int idClasse = Integer.parseInt(request.getParameter("cat"));
-			
 			produits = this.medicineBean.getPharmacieStockByPharmacie(idPharmacie,idClasse);
+			
+			
+			double[] prices = new double[produits.size()];
+			int i = 0;
+			for (Produit produit : produits) {
+				LotProduit lot = this.medicineBean.getLotFromProduct(produit.getIdProduit(), idPharmacie, 1);
+				PharmacieStock stock = this.medicineBean.getPharmacieStockByLot((int) lot.getIdLotProduit());
+				
+				prices[i] = stock.getPrixUnitaireProduit().doubleValue();
+				i++;
+			}
+			request.setAttribute("prices", prices);
 			
 		}else{
 			produits = this.medicineBean.getPharmacieStockByPharmacie(idPharmacie);
+			double[] prices = new double[produits.size()];
+			int i = 0;
+			for (Produit produit : produits) {
+				LotProduit lot = this.medicineBean.getLotFromProduct(produit.getIdProduit(), idPharmacie, 1);
+				PharmacieStock stock = this.medicineBean.getPharmacieStockByLot((int) lot.getIdLotProduit());
+				
+				prices[i] = stock.getPrixUnitaireProduit().doubleValue();
+				i++;
+			}
+			request.setAttribute("prices", prices);			
 		}
 		
 		request.setAttribute("pharmacie", this.pharmacyBean.getPharmacyById(idPharmacie));
