@@ -113,4 +113,10 @@ public class MedicineBean extends Bean implements IMedicineBean {
 			quantite);
 	}
 
+	@Override
+	public List<Produit> getPharmacieStockByPharmacie(int idPharmacie,
+			int idClasse) {
+		return this.medicineDAO.getPharmacieStockByPharmacie(idPharmacie, idClasse);
+	}
+
 }

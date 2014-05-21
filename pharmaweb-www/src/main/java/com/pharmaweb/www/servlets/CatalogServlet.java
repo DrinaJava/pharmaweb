@@ -1,6 +1,8 @@
 package com.pharmaweb.www.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -13,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pharmaweb.controller.IMedicineBean;
 import com.pharmaweb.controller.IPharmacyBean;
+import com.pharmaweb.model.entities.ClassePharmaceutique;
+import com.pharmaweb.model.entities.Produit;
 import com.pharmaweb.www.Cart;
 import com.pharmaweb.www.I18n;
 import com.pharmaweb.www.LoginCookieHandler;
@@ -48,6 +52,8 @@ public class CatalogServlet extends HttpServlet {
 
 		LoginCookieHandler.login(request);
 		
+		int idPharmacie = this.getIdPharmacie(request);
+		
 		if(request.getParameter("cartadd") != null){
 			int idProduit = Integer.parseInt(request.getParameter("cartadd"));
 					
@@ -56,15 +62,28 @@ public class CatalogServlet extends HttpServlet {
 			request.setAttribute("message", new Message("","success",I18n._(I18n.CART_ADD)));
 		}
 		
-		int idPharmacie = this.getIdPharmacie(request);
+		List<Produit> produits = new ArrayList<Produit>();
 		
-		request.setAttribute("produits", this.medicineBean.getPharmacieStockByPharmacie(idPharmacie));
+		if(request.getParameter("cat") != null){
+			int idClasse = Integer.parseInt(request.getParameter("cat"));
+			
+			produits = this.medicineBean.getPharmacieStockByPharmacie(idPharmacie,idClasse);
+			
+		}else{
+			produits = this.medicineBean.getPharmacieStockByPharmacie(idPharmacie);
+		}
+		
+		request.setAttribute("pharmacie", this.pharmacyBean.getPharmacyById(idPharmacie));
+		request.setAttribute("produits", produits);
 		request.setAttribute("categories", this.medicineBean.getFamilies());
 
 		this.dispatcher = this.getServletContext().getRequestDispatcher("/catalog.jsp");
 		this.dispatcher.forward(request, response);
 
 	}
+
+
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

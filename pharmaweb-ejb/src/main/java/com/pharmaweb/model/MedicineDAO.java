@@ -146,5 +146,41 @@ public class MedicineDAO extends DAO {
 		
 		return this.getLotById(idLot);
 	}
+
+
+	public List<Produit> getPharmacieStockByPharmacie(int idPharmacie,
+			int idClasse) {
+		List<Produit> produits = new ArrayList<Produit>();
+		
+		//TODO utiliser la requete a nico
+		
+		Query query = entityManager.createNativeQuery("SELECT DISTINCT(PRODUIT.ID_PRODUIT)  FROM PRODUIT "+
+	      "INNER JOIN LOT_PRODUIT ON PRODUIT.ID_PRODUIT = LOT_PRODUIT.ID_PRODUIT "+
+	      "INNER JOIN A_EN_STOCK ON LOT_PRODUIT.ID_LOT_PRODUIT = A_EN_STOCK.ID_LOT_PRODUIT "+
+	      "INNER JOIN CLASSE_PHARMACEUTIQUE ON CLASSE_PHARMACEUTIQUE.ID_CLASSE_PHARMACEUTIQUE = PRODUIT.ID_CLASSE_PHARMACEUTIQUE "+
+	      "WHERE A_EN_STOCK.ID_PHARMACIE="+String.valueOf(idPharmacie)+" AND PRODUIT.VISIBLE_PRODUIT=1 AND CLASSE_PHARMACEUTIQUE.ID_CLASSE_PHARMACEUTIQUE IN  "+
+          "(WITH id_classe (id) "+                        
+          "AS (SELECT ID_CLASSE_PHARMACEUTIQUE FROM CLASSE_PHARMACEUTIQUE "+
+          "WHERE  ID_CLASSE_PHARMACEUTIQUE = "+idClasse+" OR CLA_ID_CLASSE_PHARMACEUTIQUE="+idClasse+
+          " UNION ALL "+                              
+          "SELECT ID_CLASSE_PHARMACEUTIQUE FROM CLASSE_PHARMACEUTIQUE C "+
+          "INNER JOIN id_classe t "+
+          "ON t.id = C.CLA_ID_CLASSE_PHARMACEUTIQUE)"+
+          "SELECT id "+
+          "FROM   id_classe "+
+          "GROUP BY id)");
+		
+		query.setParameter(1, idPharmacie);
+		
+		List<BigDecimal> results = query.getResultList();
+		
+		
+		for (BigDecimal idProduit : results) {
+			Produit produit = this.getByID(idProduit.intValue());
+			produits.add(produit);
+		}
+
+		return produits;
+	}
 }
 

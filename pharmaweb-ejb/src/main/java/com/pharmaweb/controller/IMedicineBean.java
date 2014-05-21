@@ -39,6 +39,7 @@ public interface IMedicineBean {
 	
 	PharmacieStock getPharmacieStockByLot(int idLot);
 	List<Produit> getPharmacieStockByPharmacie(int idPharmacie);
+	List<Produit> getPharmacieStockByPharmacie(int idPharmacie, int idClasse);
 	LotProduit getLotFromProduct(long idProduit,long idPharmacie, int quantite);
 	
 }

@@ -44,8 +44,11 @@
 		</div>
 	</div>	
 	<div class="text-right">
-		 <a href="Panier?vider=vider" class="btn btn-default">Vider mon panier</a>
-		 <a href="Commander?etape=livraison" class="btn btn-success">Continuer ma commande</a>
+		<c:if test="${not isempty}"> 			
+			<a href="Panier?vider=vider" class="btn btn-default">Vider mon panier</a>
+			<a href="Commander?etape=livraison" class="btn btn-success">Continuer ma commande</a>
+		</c:if>
+		
 	</div>
 </section>	
 	

@@ -41,7 +41,7 @@
 			</div>
 			<nav>
 				<div class="contentWrapper">
-					<a class="book" href="Catalog">PHARMACIE</a> <a href="Catalog">PARAPHARMACIE</a>
+					<a class="book" href="Catalog?cat=1">PHARMACIE</a> <a href="Catalog?cat=2">PARAPHARMACIE</a>
 				</div>
 			</nav>
 
