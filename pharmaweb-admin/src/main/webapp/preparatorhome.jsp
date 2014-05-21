@@ -31,12 +31,12 @@
 						</a>
 						</li>
 						<li>
-						<a href="">
+						<a href="Orders">
 							Commandes client
 						</a>
 						</li>
 						<li>
-						<a href="">
+						<a href="PreparatorCatalog">
 							Gestion du catalogue
 						</a>
 						</li>

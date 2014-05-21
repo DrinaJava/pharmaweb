@@ -12,7 +12,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="text-right">
-			<a href="" class="btn btn-success"> Nouveau m&eacute;dicament </a>
+			<a href="PreparatorCatalog?new=1" class="btn btn-success"> Nouveau m&eacute;dicament </a>
 			</div>
 		</div>
 	</div>
@@ -34,8 +34,6 @@
 									<th>Classe Pharmaceutique</th>
 									<th>TVA</th>
 									<th>Taux de remboursement</th>
-									<th>N° de Lot</th>
-									<th>Quantit&eacute; en stock</th>
 									<th>Requiert ordonnance</th>
 									<th>Notice du produit</th>
 									<th>Image du produit</th>
@@ -46,47 +44,41 @@
 							<c:forEach var="stockLine" items="${stockLines}">
 								<tr>
 									<td>
-										${stockLine.lotProduit.produit.nomProduit}
+										${stockLine.nomProduit}
 									</td>
 
 									<td>
-									${stockLine.lotProduit.produit.nomFabriquantProduit}
+									${stockLine.nomFabriquantProduit}
 									</td>
 									<td>
-									${stockLine.lotProduit.produit.decriptionProduit}
+									${stockLine.decriptionProduit}
 									</td>
 									<td>
-									${stockLine.lotProduit.produit.classePharmaceutique.libelleClassePharmaceutique}
+									${stockLine.classePharmaceutique.libelleClassePharmaceutique}
 									</td>
 									<td>
-									${stockLine.lotProduit.produit.tva.tauxTva}
+									${stockLine.tva.tauxTva}
 									</td>
 									<td>
-									${stockLine.lotProduit.produit.typeDeRemboursement.libelleTypeDeRemboursement}
+									${stockLine.typeDeRemboursement.libelleTypeDeRemboursement}
 									</td>
 									<td>
-									${stockLine.lotProduit.numLotProduit}
-									</td>
-									<td>
-									${stockLine.quantiteStockProduit}
-									</td>
-									<td>
-									<c:if test="${stockLine.lotProduit.produit.requiereOrdonnanceProduit == 0}"> 
+									<c:if test="${stockLine.requiereOrdonnanceProduit == 0}"> 
 										<i class="fa fa-check-circle fa-2x"></i>
 										</c:if>
-										<c:if test="${stockLine.lotProduit.produit.requiereOrdonnanceProduit == 1}"> 
+										<c:if test="${stockLine.requiereOrdonnanceProduit == 1}"> 
 										<i class="fa fa-times fa-2x"></i>
 										</c:if> 
 									</td>
 																		<td>
-										<a href="${stockLine.lotProduit.produit.noticeProduit}">Lien vers la notice</a>
+										<a href="${stockLine.noticeProduit}">Lien vers la notice</a>
 									</td>
 									<td>
-										<a href="${stockLine.lotProduit.produit.imageProduit}">Lien vers l'image</a>
+										<a href="${stockLine.imageProduit}">Lien vers l'image</a>
 									</td>
 									<td class="edit">
-										<a href=""><i class="fa fa-pencil fa-2x"></i></a>
-										<a href=""><i class="fa fa-trash-o fa-2x"></i></a>
+										<a href="PreparatorCatalog?edit=${stockLine.idProduit}"><i class="fa fa-pencil fa-2x"></i></a>
+										<a href="PreparatorCatalog?del=${stockLine.idProduit}"><i class="fa fa-trash-o fa-2x"></i></a>
 									</td>
 									
 								</tr>
@@ -102,7 +94,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="text-right">
-				<a href="" class="btn btn-success"> Nouveau m&eacute;dicament </a>
+				<a href="PreparatorCatalog?new=1" class="btn btn-success"> Nouveau m&eacute;dicament </a>
 				</div>
 			</div>
 		</div>
