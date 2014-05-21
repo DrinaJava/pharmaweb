@@ -151,5 +151,7 @@ public class MedicineDAO extends DAO {
 
 		return this.getLotById(idLot);
 	}
+
+
 }
 

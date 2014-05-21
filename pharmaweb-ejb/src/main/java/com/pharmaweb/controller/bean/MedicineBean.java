@@ -122,4 +122,10 @@ public class MedicineBean extends Bean implements IMedicineBean {
 
 		return this.medicineDAO.getVisibleProduit(idProduit);	}
 
+	/* (non-Javadoc)
+	 * @see com.pharmaweb.controller.IMedicineBean#delete(com.pharmaweb.model.entities.Produit)
+	 */
+
+
+
 }
