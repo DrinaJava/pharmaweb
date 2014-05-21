@@ -10,15 +10,17 @@ import com.pharmaweb.model.entities.Produit;
 public class CartLine {
 	private Produit produit;
 	private int quantite;
+	private double puht;
 
 	public CartLine() {
 		super();
 	}
 
-	public CartLine(Produit produit, int quantite) {
+	public CartLine(Produit produit, int quantite,double puht) {
 		super();
 		this.produit = produit;
 		this.quantite = quantite;
+		this.puht = puht;
 	}
 
 	public Produit getProduit() {
@@ -35,6 +37,14 @@ public class CartLine {
 
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
+	}
+
+	public double getPuht() {
+		return puht;
+	}
+
+	public void setPuht(double puht) {
+		this.puht = puht;
 	}
 
 }

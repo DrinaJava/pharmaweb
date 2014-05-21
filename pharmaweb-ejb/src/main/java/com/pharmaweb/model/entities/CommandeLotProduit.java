@@ -18,6 +18,9 @@ public class CommandeLotProduit implements Serializable {
 	@EmbeddedId
 	private CommandeLotProduitPK id;
 
+	@Column(name="EST_DANS_ORDONNANCE")
+	private BigDecimal estDansOrdonnance;
+
 	@Column(name="PRIX_UNITAIRE_PRODUIT_COMMANDE")
 	private BigDecimal prixUnitaireProduitCommande;
 
@@ -52,6 +55,14 @@ public class CommandeLotProduit implements Serializable {
 
 	public void setId(CommandeLotProduitPK id) {
 		this.id = id;
+	}
+
+	public BigDecimal getEstDansOrdonnance() {
+		return this.estDansOrdonnance;
+	}
+
+	public void setEstDansOrdonnance(BigDecimal estDansOrdonnance) {
+		this.estDansOrdonnance = estDansOrdonnance;
 	}
 
 	public BigDecimal getPrixUnitaireProduitCommande() {

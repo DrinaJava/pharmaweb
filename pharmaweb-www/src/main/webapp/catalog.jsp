@@ -5,7 +5,14 @@
 <jsp:include page="includes/header.jsp" />
 
 <section>
+
+	<div class="text-right">
+		<c:if test="${pharmacie != null}">Ma pharmacie : ${pharmacie.nomPharmacie} <a class="btn btn-success" href="Pharmacies" >Changer</a></c:if>
+		<c:if test="${pharmacie == null}"><a href="Pharmacies" >Je s&eacute;l&eacute;ctionne ma pharmacie</a></c:if>
+	</div>
+	
 	<h1>MÉDICAMENTS</h1>
+
 
 	<c:if test="${message != null}">
 		<div class="alert alert-success">

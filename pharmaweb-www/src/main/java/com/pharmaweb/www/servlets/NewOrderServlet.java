@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,12 +27,13 @@ import com.pharmaweb.model.entities.Pharmacie;
 import com.pharmaweb.model.entities.PharmacieStock;
 import com.pharmaweb.www.Cart;
 import com.pharmaweb.www.CartLine;
+import com.pharmaweb.www.I18n;
 
 /**
  * Servlet implementation class NewOrder
  */
 @WebServlet(name = "Commander", urlPatterns = { "/Commander" })
-public class NewOrder extends HttpServlet {
+public class NewOrderServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
     private RequestDispatcher dispatcher;
@@ -50,7 +52,7 @@ public class NewOrder extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NewOrder() {
+    public NewOrderServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -72,7 +74,8 @@ public class NewOrder extends HttpServlet {
 			commande.setClient(client);
 			commande.setAdresse(client.getAdresse());
 			commande.setPharmacie(pharmacie);
-		
+			commande.setStatutCommandeClient(I18n._(I18n.WAITING));
+			
 			int idOrder = orderBean.create(commande);
 			commande = orderBean.getOrderById(idOrder);
 			
@@ -80,8 +83,18 @@ public class NewOrder extends HttpServlet {
 			List<CartLine> lines = ((Cart) request.getSession().getAttribute("cart")).getLines();
 			for (CartLine cartLine : lines) {
 				
+				
+				long idPharmacie = 0;
+				Cookie[] cookies = request.getCookies();
+				for (int i = 0; i < cookies.length; i++) {
+					if(cookies[i].getName().equals("idPharmacie")){
+						idPharmacie = Integer.parseInt(cookies[i].getValue());
+					}
+				}
+				
+				
 				long idProduit = cartLine.getProduit().getIdProduit();
-				long idPharmacie = 1;
+				
 				int quantite = cartLine.getQuantite();
 				
 				LotProduit lot = this.medicineBean.getLotFromProduct(idProduit,idPharmacie,quantite);
@@ -102,8 +115,12 @@ public class NewOrder extends HttpServlet {
 				orderBean.addLotProduit(commandeLotProduit);
 				produits.add(commandeLotProduit);
 			}
+			
+			commande.setEstDansLaCommandeClients(produits);
+			request.setAttribute("commande", commande);
+			request.setAttribute("produits", produits);
+			request.getSession().removeAttribute("cart");
 		}
-		
 		request.setAttribute("client", client);
 		
 		this.dispatcher = getServletContext().getRequestDispatcher("/neworder.jsp");

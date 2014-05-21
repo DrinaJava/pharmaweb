@@ -28,6 +28,9 @@ public class CommandeFournisseur implements Serializable {
 	@Column(name="NUM_COMMANDE_FOURNISSEUR")
 	private String numCommandeFournisseur;
 
+	@Column(name="STATUT_COMMANDE_FOURNISSEUR")
+	private String statutCommandeFournisseur;
+
 	//bi-directional many-to-one association to Pharmacie
 	@ManyToOne
 	@JoinColumn(name="ID_PHARMACIE")
@@ -62,6 +65,14 @@ public class CommandeFournisseur implements Serializable {
 
 	public void setNumCommandeFournisseur(String numCommandeFournisseur) {
 		this.numCommandeFournisseur = numCommandeFournisseur;
+	}
+
+	public String getStatutCommandeFournisseur() {
+		return this.statutCommandeFournisseur;
+	}
+
+	public void setStatutCommandeFournisseur(String statutCommandeFournisseur) {
+		this.statutCommandeFournisseur = statutCommandeFournisseur;
 	}
 
 	public Pharmacie getPharmacie() {

@@ -10,26 +10,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pharmaweb.controller.IClientBean;
-import com.pharmaweb.model.entities.Client;
+import com.pharmaweb.controller.IOrderBean;
+import com.pharmaweb.model.entities.CommandeClient;
+import com.pharmaweb.model.entities.CommandeLotProduit;
 import com.pharmaweb.www.LoginCookieHandler;
 
 /**
- * Servlet implementation class AccountServlet
+ * Servlet implementation class Orders
  */
-@WebServlet(name = "Compte", urlPatterns = { "/Compte" })
-public class AccountServlet extends HttpServlet {
+@WebServlet(name = "Commandes", urlPatterns = { "/Commandes" })
+public class OrdersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RequestDispatcher dispatcher;
-    
+       
 	@EJB
-	private IClientBean clientBean;
+	private IOrderBean orderBean;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AccountServlet() {
+    public OrdersServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -39,18 +41,26 @@ public class AccountServlet extends HttpServlet {
 		
 		LoginCookieHandler.login(request);
 		
-		if(request.getSession().getAttribute("idClient") != null){
-			int idClient = (Integer) request.getSession().getAttribute("idClient");
+		request.setAttribute("commandes", orderBean.getAll());
+		
+		double[] total = new double[orderBean.getAll().size()];
+		
+		int i = 0;
+		for (CommandeClient commande : orderBean.getAll()) {
 			
-			Client client = clientBean.getById(idClient);
-			
-			request.setAttribute("client", client);		
-			
-			this.dispatcher = this.getServletContext().getRequestDispatcher("/compte.jsp");
-			this.dispatcher.forward(request, response);
-		}else{
-			response.sendRedirect("Connexion");
+			for(CommandeLotProduit produit : orderBean.getOrderLines((int) commande.getIdCommandeClient())){
+				if(produit != null){
+					total[i] += produit.getPrixUnitaireProduitCommande().doubleValue() * produit.getQuantiteCommande().doubleValue();
+					
+				}
+			}
+			i++;
 		}
+		
+		request.setAttribute("total", total);
+		
+		this.dispatcher = this.getServletContext().getRequestDispatcher("/orders.jsp");
+		this.dispatcher.forward(request, response);
 	}
 
 	/**

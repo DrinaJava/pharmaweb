@@ -29,6 +29,29 @@
 	
 	<c:if test="${param.etape == 'recapitulatif' }">	
 		<h1>Récapitulatif de la commande</h1>
+		
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Nom produit</th>
+				<th>Prix unitaire</th>
+				<th>Quantit&eacute;</th>
+				<th>Prix total</th>	
+			</tr>
+		</thead>
+		<tbody>
+		<c:forEach var="line" items="${produits}">
+			<tr>
+				<td>${line.lotProduit.produit.nomProduit}</td>
+				<td>${line.prixUnitaireProduitCommande} €</td>
+				<td>${line.quantiteCommande}</td>
+				<td>${line.prixUnitaireProduitCommande * line.quantiteCommande} €</td>
+				
+			</tr>	
+		</c:forEach>		
+		</tbody>
+	</table>
+		
 		<a href="Commander?etape=fin" class="btn btn-success">Continuer</a>
 	</c:if>
 	

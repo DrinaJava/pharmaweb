@@ -1,6 +1,5 @@
 package com.pharmaweb.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -24,7 +23,6 @@ public interface IMedicineBean {
 	void update(Produit produit);
 	int add(Produit produit);
 
-	BigDecimal getVisibleProduit(int idProduit);
 
 	List<ClassePharmaceutique> getFamilies();
 	List<ClassePharmaceutique> getSubFamilies(int idClasse);
@@ -42,6 +40,7 @@ public interface IMedicineBean {
 
 	PharmacieStock getPharmacieStockByLot(int idLot);
 	List<Produit> getPharmacieStockByPharmacie(int idPharmacie);
+	List<Produit> getPharmacieStockByPharmacie(int idPharmacie, int idClasse);
 	LotProduit getLotFromProduct(long idProduit,long idPharmacie, int quantite);
 
 }

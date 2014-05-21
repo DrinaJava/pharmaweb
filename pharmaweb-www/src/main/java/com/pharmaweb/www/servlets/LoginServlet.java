@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
 			this.dispatcher.forward(request, response);			
 		}else{
 			Cookie cookie = new Cookie("idClient", String.valueOf(idClient));
-			cookie.setMaxAge(3600);
+			cookie.setMaxAge(172800);
 			
 			response.addCookie(cookie);
 			request.getSession().setAttribute("idClient",idClient);

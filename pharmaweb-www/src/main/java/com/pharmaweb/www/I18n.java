@@ -20,6 +20,11 @@ public class I18n {
 	
 	public static String CART_ADD = "cart.add";
 	
+	public static String WAITING = "waiting";
+	public static String INPROGRESS = "inprogess";
+	public static String PAYED = "payed";
+	public static String DELIVERED = "delivered";
+	
 	public static String _(String key){
 		
 		

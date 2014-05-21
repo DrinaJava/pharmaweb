@@ -10,6 +10,7 @@
 		<class>com.pharmaweb.model.entities.CentreMutuelle</class>
 		<class>com.pharmaweb.model.entities.ClassePharmaceutique</class>
 		<class>com.pharmaweb.model.entities.Client</class>
+		<class>com.pharmaweb.model.entities.ClientView</class>
 		<class>com.pharmaweb.model.entities.CommandeClient</class>
 		<class>com.pharmaweb.model.entities.CommandeFournisseur</class>
 		<class>com.pharmaweb.model.entities.ContientOrdonnance</class>
@@ -35,7 +36,6 @@
 		<class>com.pharmaweb.model.entities.TauxRemboursementSecu</class>
 		<class>com.pharmaweb.model.entities.Tva</class>
 		<class>com.pharmaweb.model.entities.TypeDeRemboursement</class>
-		<class>com.pharmaweb.model.entities.ClientView</class>
 
 		<properties>
 			<property name="eclipselink.logging.level.sql" value="FINE" />
