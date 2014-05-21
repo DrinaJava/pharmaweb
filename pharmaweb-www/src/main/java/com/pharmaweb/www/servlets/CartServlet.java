@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pharmaweb.controller.IMedicineBean;
-import com.pharmaweb.model.entities.LotProduit;
 import com.pharmaweb.www.Cart;
 
 /**
@@ -61,7 +60,7 @@ public class CartServlet extends HttpServlet {
 			int idProduit = Integer.parseInt(request.getParameter("add"));
 			cart.add(idProduit);
 		}
-
+		request.setAttribute("isempty", cart.getLines().isEmpty());
 		request.getSession().setAttribute("cart",cart);
 		request.getSession().setAttribute("totalht",cart.getTotalHT());
 		request.setAttribute("panier",cart.getLines());

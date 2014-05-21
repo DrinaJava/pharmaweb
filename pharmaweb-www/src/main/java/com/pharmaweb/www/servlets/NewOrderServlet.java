@@ -119,6 +119,7 @@ public class NewOrderServlet extends HttpServlet {
 			commande.setEstDansLaCommandeClients(produits);
 			request.setAttribute("commande", commande);
 			request.setAttribute("produits", produits);
+			request.getSession().removeAttribute("cart");
 		}
 		request.setAttribute("client", client);
 		
